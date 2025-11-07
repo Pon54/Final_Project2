@@ -1,0 +1,96 @@
+/* Small visual fixes to bring the migrated homepage closer to the legacy look
+   Applied as an override after the original legacy CSS. Keep rules minimal and specific. */
+
+/* Layout container width similar to legacy site */
+.container {
+  max-width: 1140px;
+}
+
+/* Banner: ensure a visible hero area and preserve image aspect */
+#banner.banner-section { 
+  min-height: 260px;
+  background-size: cover;
+  background-position: center center;
+  padding: 40px 0;
+}
+
+/* Recent/new cars tab spacing */
+.recent-tab { margin-bottom: 18px; }
+.recent-tab .nav-tabs > li > a { padding: 10px 18px; }
+
+/* Product listing: make list items align horizontally with image and content */
+.product-listing-m { display: flex; gap: 18px; padding: 14px; align-items: center; }
+.product-listing-img { flex: 0 0 320px; max-width: 320px; }
+.product-listing-img img { width: 100%; height: auto; display: block; border-radius: 4px; }
+.product-listing-content { flex: 1 1 auto; }
+
+/* Smaller card details & price alignment */
+.list-price { font-weight: 700; color: #d9534f; margin-top: 6px; }
+
+/* Sidebar recent cars: tighten the spacing */
+.recent_addedcars ul { list-style: none; padding: 0; margin: 0; }
+.recent_addedcars li { display:flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid #eee; }
+.recent_post_img img { width: 88px; height: 60px; object-fit: cover; border-radius: 3px; }
+
+/* Header/logo alignment */
+.default-header .logo img { max-height: 58px; width: auto; }
+.header_info { display:flex; gap: 18px; align-items:center; }
+
+/* Make action buttons consistent */
+.btn { border-radius: 3px; padding: 8px 12px; }
+
+/* Mobile tweaks */
+@media (max-width: 767px) {
+  .product-listing-m { flex-direction: column; }
+  .product-listing-img { width: 100%; max-width: none; }
+  .recent_post_img img { width: 64px; height: 48px; }
+}
+
+/* Minor form fixes */
+#header-search-form input[type="text"] { min-width: 220px; }
+
+/* Ensure nav links are vertically centered */
+.navbar-default .navbar-nav > li > a { padding-top: 15px; padding-bottom: 15px; }
+
+/* Keep legacy buttons visible on light backgrounds */
+.btn.btn-xs { padding: 6px 8px; font-size: 12px; }
+
+/* Footer spacing */
+.footer-top { padding: 28px 0; }
+
+/* Hero title styling to match legacy look */
+.section-header { text-align: center; margin-bottom: 32px; }
+.section-header h2 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; }
+.section-header h2 span { color: #ff4b4b; font-weight: 700; }
+.section-header p { color: #6b6b6b; margin-top: 8px; }
+
+/* CTA pill button under hero */
+.hero-cta { text-align:center; margin-top: 18px; margin-bottom: 28px; }
+.btn-cta { background:#ff3b3b; color:#fff; border:none; padding:10px 22px; border-radius:40px; box-shadow:0 6px 18px rgba(0,0,0,0.12); display:inline-block; }
+.btn-cta:hover { background:#e03232; color:#fff; }
+
+/* Card visual: small top meta bar then white card with shadow */
+.col-list-3 { width: 30.333%; float:left; padding: 0 10px; box-sizing: border-box; }
+.recent-car-list { background: transparent; }
+.car-info-box { background:#f7f7f7; border-radius:4px 4px 0 0; padding:8px; font-size:13px; color:#fff; background:#666; }
+.car-title-m { background:#fff; padding:12px 14px; box-shadow:0 6px 10px rgba(0,0,0,0.06); }
+.inventory_info_m { padding:10px 14px 18px; background:#fff; margin-bottom: 20px; }
+
+/* Clearfix for rows */
+.recent-tab + .tab-content:after, .tab-content:after { content: ''; display: table; clear: both; }
+
+/* Footer background overlay similar to screenshot */
+.footer-bottom { background:#222; color:#ddd; padding:24px 0; }
+
+/* Card hover / clickable affordance */
+.product-listing-m { transition: transform 200ms ease, box-shadow 200ms ease; cursor: pointer; }
+.product-listing-m:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.18); }
+.product-listing-img img { transition: transform 300ms ease; }
+.product-listing-m:hover .product-listing-img img { transform: scale(1.04); }
+.col-list-3:hover { z-index: 5; }
+
+/* Ensure links inside cards are full-width and visible */
+.product-listing-m a { color: inherit; text-decoration: none; }
+.product-listing-m a.btn { pointer-events: none; }
+
+
