@@ -9,8 +9,6 @@
   <div class="alert alert-success">{{ session('status') }}</div>
 @endif
 
-<p><a href="{{ route('admin.pages.create') }}" class="btn btn-primary">Create Page</a></p>
-
 <table class="table table-striped">
   <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Actions</th></tr></thead>
   <tbody>

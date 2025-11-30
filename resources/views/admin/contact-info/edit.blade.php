@@ -29,7 +29,7 @@
     @endif
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <form method="POST" action="{{ route('admin.contact-info.update') }}" class="contact-info-form">
           @csrf
           @method('PUT')
@@ -90,38 +90,7 @@
         </form>
       </div>
 
-      <div class="col-md-4">
-        <div class="info-panel">
-          <h5><i class="fa fa-lightbulb-o"></i> Information</h5>
-          <div class="alert alert-info">
-            <p><strong>Where this information appears:</strong></p>
-            <ul class="fa-ul">
-              <li><i class="fa fa-li fa-check"></i> Website header</li>
-              <li><i class="fa fa-li fa-check"></i> Contact Us page</li>
-              <li><i class="fa fa-li fa-check"></i> Footer section</li>
-              <li><i class="fa fa-li fa-check"></i> Email signatures</li>
-            </ul>
-          </div>
 
-          <div class="current-info">
-            <h5><i class="fa fa-eye"></i> Current Information</h5>
-            <div class="info-display">
-              <div class="info-item">
-                <strong>Address:</strong>
-                <p>{{ $contactInfo->Address ?? 'Not set' }}</p>
-              </div>
-              <div class="info-item">
-                <strong>Email:</strong>
-                <p>{{ $contactInfo->EmailId ?? 'Not set' }}</p>
-              </div>
-              <div class="info-item">
-                <strong>Phone:</strong>
-                <p>{{ $contactInfo->ContactNo ?? 'Not set' }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

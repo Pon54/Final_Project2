@@ -31,9 +31,20 @@ class ContactController extends Controller
 
     public function subscribe(Request $r)
     {
-        $r->validate(['subscriberemail' => 'required|email']);
-        Subscriber::firstOrCreate(['SubscriberEmail' => $r->subscriberemail]);
-        $r->session()->flash('msg','Subscribed successfully.');
-        return redirect()->back();
+        if (!auth()->check()) {
+            return redirect()->back()->with('subscribe_error', 'Please login first to subscribe.');
+        }
+        
+        $r->validate([
+            'subscriberemail' => 'required|email|max:255'
+        ]);
+        
+        $subscriber = Subscriber::firstOrCreate(['SubscriberEmail' => $r->subscriberemail]);
+        
+        if ($subscriber->wasRecentlyCreated) {
+            return redirect()->back()->with('subscribe_success', 'Successfully subscribed! Thank you for subscribing to our car rental portal.');
+        } else {
+            return redirect()->back()->with('subscribe_success', 'You are already subscribed to our car rental portal.');
+        }
     }
 }

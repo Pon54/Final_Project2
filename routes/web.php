@@ -35,7 +35,7 @@ Route::get('/car-listing.php', function () { return redirect('/car-listing', 301
 Route::get('/contact-us', [LegacyController::class, 'contact']);
 Route::post('/contact-us', [ContactController::class, 'contact']);
 Route::post('/contact', [ContactController::class, 'contact']);
-Route::post('/subscribe', [ContactController::class, 'subscribe']);
+Route::post('/subscribe', [ContactController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/page', [PageController::class, 'show']);
 

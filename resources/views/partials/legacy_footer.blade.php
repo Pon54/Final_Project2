@@ -14,9 +14,20 @@
           </ul>
         </div>
         <div class="col-md-3 col-sm-6">
-          <h6>Subscribe Newsletter</h6>
+          <h6>Subscribe</h6>
           <div class="newsletter-form">
-            <form method="post" action="#">
+            @if(session('subscribe_success'))
+              <div class="alert alert-success">
+                {{ session('subscribe_success') }}
+              </div>
+            @endif
+            @if(session('subscribe_error'))
+              <div class="alert alert-danger">
+                {{ session('subscribe_error') }}
+              </div>
+            @endif
+            <form method="post" action="{{ route('subscribe') }}">
+              @csrf
               <div class="form-group">
                 <input type="email" name="subscriberemail" class="form-control newsletter-input" required placeholder="Enter Email Address" />
               </div>
