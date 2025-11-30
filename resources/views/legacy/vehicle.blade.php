@@ -1,3 +1,7 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+
 @extends('layouts.legacy')
 
 @section('title', 'Vehicle Details')
@@ -735,7 +739,7 @@
       </div>
       <div class="col-md-3">
         <div class="price_info">
-          <p>${{ $vehicle->PricePerDay ?? '0' }} </p>Per Day
+          <p>₱{{ $vehicle->PricePerDay ?? '0' }} </p>Per Day
         </div>
       </div>
     </div>
@@ -782,7 +786,7 @@
                       <div class="col-md-6">
                         <ul class="vehicle-specs">
                           <li><strong>Seating Capacity:</strong> {{ $vehicle->SeatingCapacity ?? 'N/A' }} persons</li>
-                          <li><strong>Price Per Day:</strong> ${{ $vehicle->PricePerDay ?? 'N/A' }}</li>
+                          <li><strong>Price Per Day:</strong> ₱{{ $vehicle->PricePerDay ?? 'N/A' }}</li>
                           <li><strong>Registration Date:</strong> {{ $vehicle->RegDate ? date('M d, Y', strtotime($vehicle->RegDate)) : 'N/A' }}</li>
                         </ul>
                       </div>
@@ -851,7 +855,7 @@
             <div class="form-group">
               <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
             </div>
-            @if(session('login'))
+            @if(Auth::check())
               <div class="form-group">
                 <input type="submit" class="btn"  name="submit" value="Book Now">
               </div>
@@ -897,7 +901,7 @@
             </div>
             <div class="product-listing-content">
               <h5><a href="{{ url('vehicle/' . $s->id) }}">{{ $s->BrandName }} {{ $s->VehiclesTitle }}</a></h5>
-              <p class="list-price">${{ number_format($s->PricePerDay, 0) }}/day</p>
+              <p class="list-price">₱{{ number_format($s->PricePerDay, 0) }}/day</p>
               @if($s->FuelType)
                 <p class="fuel-type"><i class="fa fa-tint"></i> {{ $s->FuelType }}</p>
               @endif

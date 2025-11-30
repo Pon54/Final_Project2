@@ -45,7 +45,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label>Price Per Day(in USD) *</label>
+              <label>Price Per Day(in PHP) *</label>
               <input class="form-control" name="PricePerDay" value="{{ old('PricePerDay', $vehicle->PricePerDay ?? '') }}" required>
             </div>
             <div class="form-group col-md-4">

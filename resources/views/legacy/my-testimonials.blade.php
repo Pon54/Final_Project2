@@ -31,12 +31,12 @@
 }
 .profile-container {
   padding: 60px 0;
-  background: #f8f9fa;
+  background: #ffffff;
 }
 .profile-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 0;
+  box-shadow: none;
   overflow: hidden;
 }
 .profile-sidebar {
@@ -69,6 +69,8 @@
 }
 .profile-content {
   padding: 30px;
+  background: #ffffff !important;
+  background-image: none !important;
 }
 .profile-avatar {
   text-align: center;
@@ -115,38 +117,48 @@
   font-weight: 500;
 }
 .testimonial-card {
-  background: white;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: box-shadow 0.3s;
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 30px !important;
+  box-shadow: none !important;
+}
+.testimonial-card::before,
+.testimonial-card::after {
+  display: none !important;
 }
 .testimonial-card:hover {
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  background: transparent !important;
 }
 .testimonial-content {
   font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 15px;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 10px;
   font-style: italic;
+  background: none !important;
+  text-align: left;
+}
+.testimonial-content::before,
+.testimonial-content::after {
+  display: none !important;
 }
 .testimonial-meta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: 15px;
-  border-top: 1px solid #e9ecef;
+  align-items: flex-start;
+  padding-top: 0;
+  border: none;
+  margin-top: 10px;
 }
 .testimonial-date {
-  color: #999;
+  color: #666;
   font-size: 13px;
 }
 .testimonial-status {
-  padding: 4px 12px;
-  border-radius: 12px;
+  padding: 5px 12px;
+  border-radius: 3px;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;

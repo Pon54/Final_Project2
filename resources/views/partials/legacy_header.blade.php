@@ -111,3 +111,17 @@ use Illuminate\Support\Facades\Auth;
 @include('partials.modals.login')
 @include('partials.modals.registration')
 @include('partials.modals.forgotpassword')
+
+<style>
+.circle_icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.circle_icon i {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+</style>

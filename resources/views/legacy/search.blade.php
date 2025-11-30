@@ -62,7 +62,7 @@
             </div>
             <div class="product-listing-content">
               <h5><a href="{{ url('vehicle/' . $result->id) }}">{{ $result->BrandName ?? 'N/A' }}, {{ $result->VehiclesTitle ?? 'N/A' }}</a></h5>
-              <p class="list-price">${{ $result->PricePerDay ?? '0' }} Per Day</p>
+              <p class="list-price">₱{{ $result->PricePerDay ?? '0' }} Per Day</p>
               <ul>
                 <li><i class="fa fa-user" aria-hidden="true"></i>{{ $result->SeatingCapacity ?? 'N/A' }} seats</li>
                 <li><i class="fa fa-calendar" aria-hidden="true"></i>{{ $result->ModelYear ?? 'N/A' }} model</li>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="recent_post_title"> 
                   <a href="{{ url('vehicle/' . $recentCar->id) }}">{{ $recentCar->BrandName ?? 'N/A' }}, {{ $recentCar->VehiclesTitle ?? 'N/A' }}</a>
-                  <p class="widget_price">${{ $recentCar->PricePerDay ?? '0' }} Per Day</p>
+                  <p class="widget_price">₱{{ $recentCar->PricePerDay ?? '0' }} Per Day</p>
                 </div>
               </li>
               @endforeach
