@@ -8,6 +8,7 @@ class Testimonial extends Model
 {
     protected $table = 'tbltestimonial';
     protected $fillable = ['Testimonial','UserEmail','status'];
+    public $timestamps = false;
 
     public function user()
     {

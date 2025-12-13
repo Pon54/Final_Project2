@@ -63,7 +63,7 @@ class VehicleController extends Controller
             }
         }
     Vehicle::create($data);
-        return redirect()->route('admin.vehicles.index')->with('msg','Vehicle created.');
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function edit($id)
@@ -119,24 +119,24 @@ class VehicleController extends Controller
             }
         }
         $vehicle->update($data);
-        return redirect()->route('admin.vehicles.index')->with('msg','Vehicle updated.');
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function destroy($id)
     {
         $v = Vehicle::findOrFail($id);
         $v->delete();
-        return redirect()->route('admin.vehicles.index')->with('msg','Vehicle deleted.');
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function bulkDelete(Request $r)
     {
         $ids = $r->input('ids', []);
         if(empty($ids)){
-            return redirect()->route('admin.vehicles.index')->with('error','No vehicles selected.');
+            return redirect()->route('admin.vehicles.index');
         }
         Vehicle::whereIn('id', $ids)->delete();
-        return redirect()->route('admin.vehicles.index')->with('msg','Selected vehicles deleted.');
+        return redirect()->route('admin.vehicles.index');
     }
 
     public function exportCsv()

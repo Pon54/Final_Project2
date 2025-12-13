@@ -38,20 +38,24 @@
       <div class="col-md-6">
         <h3>Contact Info</h3>
         <div class="contact_detail">
+          @if(isset($user) && ($user->Address || $user->ContactNo || $user->EmailId))
           <ul>
             <li>
               <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-              <div class="contact_info_m">{{ $contact_info->address ?? 'Address not set' }}</div>
+              <div class="contact_info_m">{{ $user->Address ?? 'Not set' }}</div>
             </li>
             <li>
               <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-              <div class="contact_info_m"><a href="tel:{{ $contact_info->phone ?? '' }}">{{ $contact_info->phone ?? '' }}</a></div>
+              <div class="contact_info_m">{{ $user->ContactNo ?? 'Not set' }}</div>
             </li>
             <li>
               <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-              <div class="contact_info_m"><a href="mailto:{{ $contact_info->email ?? '' }}">{{ $contact_info->email ?? '' }}</a></div>
+              <div class="contact_info_m">{{ $user->EmailId ?? 'Not set' }}</div>
             </li>
           </ul>
+          @else
+          <p class="text-muted" style="padding: 20px;">No contact information available. Please update your profile settings to add your contact details.</p>
+          @endif
         </div>
       </div>
     </div>

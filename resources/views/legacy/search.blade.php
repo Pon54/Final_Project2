@@ -94,17 +94,18 @@
               <div class="form-group select">
                 <select class="form-control" name="brand">
                   <option value="">Select Brand</option>
-                  @foreach($brands as $brand)
-                  <option value="{{ $brand->id }}">{{ $brand->BrandName }}</option>
+                  @foreach($brands as $brandItem)
+                  <option value="{{ $brandItem->id }}" {{ (request('brand') == $brandItem->id) ? 'selected' : '' }}>{{ $brandItem->BrandName }}</option>
                   @endforeach
                 </select>
               </div>
               <div class="form-group select">
                 <select class="form-control" name="fueltype">
                   <option value="">Select Fuel Type</option>
-                  <option value="Petrol">Petrol</option>
-                  <option value="Diesel">Diesel</option>
-                  <option value="CNG">CNG</option>
+                  <option value="Petrol" {{ (request('fueltype') == 'Petrol') ? 'selected' : '' }}>Petrol</option>
+                  <option value="Diesel" {{ (request('fueltype') == 'Diesel') ? 'selected' : '' }}>Diesel</option>
+                  <option value="CNG" {{ (request('fueltype') == 'CNG') ? 'selected' : '' }}>CNG</option>
+                  <option value="Electric" {{ (request('fueltype') == 'Electric') ? 'selected' : '' }}>Electric</option>
                 </select>
               </div>
               <div class="form-group">

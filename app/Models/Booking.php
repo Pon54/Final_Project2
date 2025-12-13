@@ -8,6 +8,7 @@ class Booking extends Model
 {
     protected $table = 'tblbooking';
     protected $guarded = [];
+    public $timestamps = false;
 
     public function vehicle()
     {

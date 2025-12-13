@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->date('ToDate')->nullable();
             $table->text('message')->nullable();
             $table->tinyInteger('Status')->default(0);
+            $table->timestamp('PostingDate')->useCurrent();
             $table->timestamps();
 
                 $table->foreign('VehicleId')->references('id')->on('tblvehicles')->onDelete('cascade');

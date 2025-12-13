@@ -171,6 +171,27 @@
   color: #666;
   font-size: 13px;
 }
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+.btn-danger:hover {
+  background: #c82333;
+}
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 11px;
+}
 </style>
 
 <div class="profile-header">
@@ -204,7 +225,7 @@
                 <li><a href="{{ url('my-booking') }}" class="active">My Booking</a></li>
                 <li><a href="{{ url('post-testimonial') }}">Post a Testimonial</a></li>
                 <li><a href="{{ url('my-testimonials') }}">My Testimonials</a></li>
-                <li><a href="{{ url('logout') }}">Sign Out</a></li>
+                <li><a href="javascript:void(0)" onclick="showLogoutModal('{{ url('logout') }}')">Sign Out</a></li>
               </ul>
             </div>
 
@@ -233,6 +254,7 @@
                           <th>Message</th>
                           <th>Status</th>
                           <th>Booking Date</th>
+                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -273,6 +295,14 @@
                             <div class="booking-dates">
                               {{ $booking->created_at ? $booking->created_at->format('M d, Y') : ($booking->PostingDate ?? 'N/A') }}
                             </div>
+                          </td>
+                          <td>
+                            <form action="{{ url('/booking/' . $booking->id . '/cancel') }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                              @csrf
+                              <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fa fa-times"></i> Cancel
+                              </button>
+                            </form>
                           </td>
                         </tr>
                         @endforeach

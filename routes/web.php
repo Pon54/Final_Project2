@@ -65,6 +65,7 @@ Route::get('/my-testimonials', [LegacyController::class, 'myTestimonials']);
 |--------------------------------------------------------------------------
 */
 Route::post('/vehicle/{id}/book', [BookingController::class, 'book']);
+Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel']);
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/manage-bookings', [AdminBookingController::class,'index'])->name('bookings.index');
         Route::post('/manage-bookings/{id}/status', [AdminBookingController::class,'setStatus'])->name('bookings.setstatus');
         Route::get('/manage-bookings/{id}', [AdminBookingController::class,'show'])->name('bookings.show');
+        Route::delete('/manage-bookings/{id}', [AdminBookingController::class,'destroy'])->name('bookings.destroy');
 
     // Other admin pages
     // Pages CRUD

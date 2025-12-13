@@ -9,7 +9,7 @@
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
-        <tr><th>#</th><th>Booking No</th><th>User</th><th>Vehicle</th><th>From</th><th>To</th><th>Status</th><th>Actions</th></tr>
+        <tr><th>#</th><th>Booking No</th><th>User</th><th>Vehicle</th><th>From</th><th>To</th><th>Message</th><th>Status</th><th>Actions</th></tr>
       </thead>
       <tbody>
         @forelse($bookings as $b)
@@ -20,6 +20,7 @@
           <td>{{ $b->vehicle->VehiclesTitle ?? '—' }}</td>
           <td>{{ $b->FromDate }}</td>
           <td>{{ $b->ToDate }}</td>
+          <td>{{ Str::limit($b->message ?? 'No message', 30) }}</td>
           <td>{{ ucfirst($b->status_text) }}</td>
           <td>
             <a href="{{ route('admin.bookings.show', $b->id) }}" class="btn btn-sm btn-primary">View</a>
@@ -31,6 +32,11 @@
                 <option value="canceled" @if($b->Status==2) selected @endif>Canceled</option>
               </select>
               <button class="btn btn-sm btn-success">Set</button>
+            </form>
+            <form method="POST" action="{{ route('admin.bookings.destroy', $b->id) }}" style="display:inline-block" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
             </form>
           </td>
         </tr>

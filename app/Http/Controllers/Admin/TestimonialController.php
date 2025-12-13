@@ -18,13 +18,13 @@ class TestimonialController extends Controller
         $t = Testimonial::findOrFail($id);
         $t->status = $request->input('status', $t->status);
         $t->save();
-        return redirect()->route('admin.testimonials.index')->with('status','Testimonial updated');
+        return redirect()->route('admin.testimonials.index');
     }
 
     public function destroy($id)
     {
         $t = Testimonial::find($id);
         if ($t) $t->delete();
-        return redirect()->route('admin.testimonials.index')->with('status','Testimonial deleted');
+        return redirect()->route('admin.testimonials.index');
     }
 }

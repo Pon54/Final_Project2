@@ -2,6 +2,17 @@
 use Illuminate\Support\Facades\Auth;
 @endphp
 
+<style>
+.contact-info-hover {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.contact-info-hover:hover {
+  color: #fa2837;
+  text-decoration: underline;
+}
+</style>
+
 <header>
   <div class="default-header">
     <div class="container">
@@ -18,12 +29,12 @@ use Illuminate\Support\Facades\Auth;
             <div class="header_widgets">
               <div class="circle_icon"> <i class="fa fa-envelope" aria-hidden="true"></i> </div>
               <p class="uppercase_text">FOR SUPPORT MAIL US :</p>
-              <span>psy@gmail.com</span>
+              <span class="contact-info-hover">{{ $contact_email ?? 'info@example.com' }}</span>
             </div>
             <div class="header_widgets">
               <div class="circle_icon"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
               <p class="uppercase_text">SERVICE HELPLINE CALL US:</p>
-              <span>09057193245</span>
+              <span class="contact-info-hover">{{ $contact_phone ?? '0000000000' }}</span>
             </div>
             <div class="social-follow">
               <!-- Social icons can be added here -->
@@ -73,7 +84,7 @@ use Illuminate\Support\Facades\Auth;
                   <li><a href="{{ url('/my-booking') }}">My Booking</a></li>
                   <li><a href="{{ url('/post-testimonial') }}">Post a Testimonial</a></li>
                   <li><a href="{{ url('/my-testimonials') }}">My Testimonial</a></li>
-                  <li><a href="{{ url('/logout') }}">Sign Out</a></li>
+                  <li><a href="javascript:void(0)" onclick="showLogoutModal('{{ url('/logout') }}')">Sign Out</a></li>
                 @else
                   <li><a href="#loginform" data-toggle="modal">Login</a></li>
                   <li><a href="#signupform" data-toggle="modal">Register</a></li>

@@ -8,4 +8,5 @@ class Subscriber extends Model
 {
     protected $table = 'tblsubscribers';
     protected $fillable = ['SubscriberEmail'];
+    public $timestamps = false;
 }

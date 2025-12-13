@@ -172,7 +172,7 @@
                 <li><a href="{{ url('my-booking') }}">My Booking</a></li>
                 <li><a href="{{ url('post-testimonial') }}">Post a Testimonial</a></li>
                 <li><a href="{{ url('my-testimonials') }}">My Testimonials</a></li>
-                <li><a href="{{ url('logout') }}">Sign Out</a></li>
+                <li><a href="javascript:void(0)" onclick="showLogoutModal('{{ url('logout') }}')">Sign Out</a></li>
               </ul>
             </div>
 

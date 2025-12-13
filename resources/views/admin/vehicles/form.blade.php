@@ -55,6 +55,7 @@
                 <option value="Petrol" {{ old('FuelType', $vehicle->FuelType ?? '') == 'Petrol' ? 'selected' : '' }}>Petrol</option>
                 <option value="Diesel" {{ old('FuelType', $vehicle->FuelType ?? '') == 'Diesel' ? 'selected' : '' }}>Diesel</option>
                 <option value="CNG" {{ old('FuelType', $vehicle->FuelType ?? '') == 'CNG' ? 'selected' : '' }}>CNG</option>
+                <option value="Electric" {{ old('FuelType', $vehicle->FuelType ?? '') == 'Electric' ? 'selected' : '' }}>Electric</option>
               </select>
             </div>
             <div class="form-group col-md-4">

@@ -82,10 +82,8 @@
       {{ $queries->links() }}
     </div>
     @else
-    <div class="alert alert-info text-center">
-      <i class="fa fa-inbox fa-3x"></i>
-      <h4>No Contact Queries</h4>
-      <p>No customer inquiries have been received yet.</p>
+    <div class="text-center" style="padding: 40px;">
+      <p class="text-muted">No contact queries found.</p>
     </div>
     @endif
   </div>
