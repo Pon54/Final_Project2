@@ -14,9 +14,10 @@
           </ul>
         </div>
         <div class="col-md-3 col-sm-6">
-          <h6>Subscribe Newsletter</h6>
+          <h6>Subscribe to our Car Rental Portal</h6>
           <div class="newsletter-form">
-            <form method="post" action="#">
+            <form method="post" action="{{ url('/subscribe') }}">
+              @csrf
               <div class="form-group">
                 <input type="email" name="subscriberemail" class="form-control newsletter-input" required placeholder="Enter Email Address" />
               </div>

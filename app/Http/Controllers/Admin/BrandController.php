@@ -20,7 +20,9 @@ class BrandController extends Controller
 
     public function store(Request $r)
     {
-        $r->validate(['BrandName'=>'required|string|max:255']);
+        $r->validate([
+            'BrandName'=>'required|string|max:255|unique:tblbrands,BrandName'
+        ]);
         Brand::create($r->only('BrandName'));
         return redirect()->route('admin.brands.index')->with('msg','Brand created.');
     }
@@ -33,7 +35,9 @@ class BrandController extends Controller
 
     public function update(Request $r, $id)
     {
-        $r->validate(['BrandName'=>'required|string|max:255']);
+        $r->validate([
+            'BrandName'=>'required|string|max:255|unique:tblbrands,BrandName,'.$id
+        ]);
         $b = Brand::findOrFail($id);
         $b->update($r->only('BrandName'));
         return redirect()->route('admin.brands.index')->with('msg','Brand updated.');

@@ -26,16 +26,13 @@
           <tr>
             <td><input type="checkbox" class="rowCheck" name="ids[]" value="{{ $v->id }}"></td>
             <td>{{ $v->id }}</td>
-            <td>{{ $v->VehicleTitle }}</td>
+            <td>{{ $v->VehiclesTitle }}</td>
             <td>{{ $v->brand->BrandName ?? '—' }}</td>
             <td>{{ $v->PricePerDay }}</td>
             <td><img src="{{ asset('legacy/admin/img/vehicleimages/'.$v->Vimage1) }}" style="height:50px"></td>
             <td>
               <a href="{{ route('admin.vehicles.edit',$v->id) }}" class="btn btn-primary btn-xs">Edit</a>
-              <form action="{{ route('admin.vehicles.destroy',$v->id) }}" method="POST" style="display:inline">
-                @csrf @method('DELETE')
-                <button class="btn btn-danger btn-xs" onclick="return confirm('Delete vehicle?')">Delete</button>
-              </form>
+              <button type="button" class="btn btn-danger btn-xs delete-vehicle" data-id="{{ $v->id }}" data-url="{{ route('admin.vehicles.destroy',$v->id) }}">Delete</button>
             </td>
           </tr>
           @endforeach
@@ -48,13 +45,68 @@
 
 @push('scripts')
 <script>
+// Master checkbox to select/deselect all
 document.getElementById('masterCheck')?.addEventListener('change', function(e){
   document.querySelectorAll('.rowCheck').forEach(cb => cb.checked = e.target.checked);
 });
+
+// Select All button toggle
 document.getElementById('selectAll')?.addEventListener('click', function(){
   const all = Array.from(document.querySelectorAll('.rowCheck'));
   const anyUnchecked = all.some(cb => !cb.checked);
   all.forEach(cb => cb.checked = anyUnchecked);
+  // Update master checkbox to match
+  document.getElementById('masterCheck').checked = anyUnchecked;
+  // Update button text
+  this.textContent = anyUnchecked ? 'Deselect All' : 'Select All';
+});
+
+// Update master checkbox when individual checkboxes change
+document.querySelectorAll('.rowCheck').forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    const all = Array.from(document.querySelectorAll('.rowCheck'));
+    const allChecked = all.every(cb => cb.checked);
+    document.getElementById('masterCheck').checked = allChecked;
+  });
+});
+
+// Individual delete button handler
+document.querySelectorAll('.delete-vehicle').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    if (confirm('Delete this vehicle?')) {
+      const url = this.getAttribute('data-url');
+      const csrfToken = document.querySelector('meta[name="csrf-token"]');
+      
+      console.log('Delete URL:', url);
+      console.log('CSRF Token:', csrfToken ? csrfToken.getAttribute('content') : 'NOT FOUND');
+      
+      if (!csrfToken) {
+        alert('CSRF token not found. Cannot delete.');
+        return;
+      }
+      
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = url;
+      
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = '_token';
+      csrfInput.value = csrfToken.getAttribute('content');
+      
+      const methodInput = document.createElement('input');
+      methodInput.type = 'hidden';
+      methodInput.name = '_method';
+      methodInput.value = 'DELETE';
+      
+      form.appendChild(csrfInput);
+      form.appendChild(methodInput);
+      document.body.appendChild(form);
+      
+      console.log('Form HTML:', form.outerHTML);
+      form.submit();
+    }
+  });
 });
 </script>
 @endpush

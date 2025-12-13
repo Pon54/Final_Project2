@@ -91,12 +91,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Vehicles CRUD + bulk/export
         Route::get('/manage-vehicles', [AdminVehicleController::class,'index'])->name('vehicles.index');
         Route::get('/manage-vehicles/create', [AdminVehicleController::class,'create'])->name('vehicles.create');
+        Route::get('/manage-vehicles/export', [AdminVehicleController::class,'exportCsv'])->name('vehicles.export');
         Route::post('/manage-vehicles', [AdminVehicleController::class,'store'])->name('vehicles.store');
+        Route::post('/manage-vehicles/bulk-delete', [AdminVehicleController::class,'bulkDelete'])->name('vehicles.bulkDelete');
         Route::get('/manage-vehicles/{id}/edit', [AdminVehicleController::class,'edit'])->name('vehicles.edit');
         Route::put('/manage-vehicles/{id}', [AdminVehicleController::class,'update'])->name('vehicles.update');
         Route::delete('/manage-vehicles/{id}', [AdminVehicleController::class,'destroy'])->name('vehicles.destroy');
-        Route::post('/manage-vehicles/bulk-delete', [AdminVehicleController::class,'bulkDelete'])->name('vehicles.bulkDelete');
-        Route::get('/manage-vehicles/export', [AdminVehicleController::class,'exportCsv'])->name('vehicles.export');
 
         // Brands CRUD (resource-like)
         Route::get('/manage-brands', [AdminBrandController::class,'index'])->name('brands.index');

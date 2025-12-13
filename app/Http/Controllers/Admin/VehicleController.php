@@ -42,7 +42,7 @@ class VehicleController extends Controller
         ]);
 
         // use legacy column names so admin-created records appear correctly on the public site
-        $data = $r->only(['VehiclesTitle','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
+        $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
         
         // Handle accessories - checkboxes are only sent if checked
         $accessoryFields = ['AirConditioner','AntiLockBrakingSystem','PowerSteering','PowerWindows',
@@ -92,7 +92,7 @@ class VehicleController extends Controller
             '*.max' => 'Each image must not exceed 5MB in size.'
         ]);
         $vehicle = Vehicle::findOrFail($id);
-        $data = $r->only(['VehiclesTitle','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
+        $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
         
         // Handle accessories - checkboxes are only sent if checked
         $accessoryFields = ['AirConditioner','AntiLockBrakingSystem','PowerSteering','PowerWindows',

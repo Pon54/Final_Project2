@@ -69,7 +69,6 @@ class User extends Authenticatable
         return [
             'RegDate' => 'datetime',
             'UpdationDate' => 'datetime',
-            'Password' => 'hashed',
         ];
     }
 

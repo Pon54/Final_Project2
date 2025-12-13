@@ -13,18 +13,62 @@
   <body>
     @include('partials.legacy_header')
 
-    {{-- flash messages (session) --}}
-    <div style="max-width:1024px;margin:12px auto;padding:0 12px;">
-      @if(session('msg'))
-        <div style="background:#e6ffed;border:1px solid #c6f6d5;padding:10px;border-radius:4px;color:#065f46;margin-bottom:12px;">{{ session('msg') }}</div>
-      @endif
-      @if(session('error'))
-        <div style="background:#fff1f2;border:1px solid #fecaca;padding:10px;border-radius:4px;color:#991b1b;margin-bottom:12px;">{{ session('error') }}</div>
-      @endif
-      @if(session('status'))
-        <div style="background:#ebf8ff;border:1px solid #bee3f8;padding:10px;border-radius:4px;color:#0c4a6e;margin-bottom:12px;">{{ session('status') }}</div>
-      @endif
+    {{-- Success Modal Pop-up (centered) --}}
+    @if(session('success_modal'))
+    <div id="successModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;">
+      <div style="background:white;padding:40px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;max-width:400px;animation:slideIn 0.3s ease-out;">
+        <div style="margin-bottom:20px;">
+          <i class="fa fa-smile-o" style="font-size:60px;color:#4caf50;"></i>
+        </div>
+        <h3 style="color:#2c3e50;margin-bottom:15px;font-weight:600;">Notice</h3>
+        <p style="color:#7f8c8d;font-size:16px;margin-bottom:30px;">{{ session('success_modal') }}</p>
+        <button onclick="document.getElementById('successModal').style.display='none'" class="btn btn-primary" style="padding:10px 40px;font-size:16px;background:#4caf50;border:none;border-radius:4px;cursor:pointer;">
+          OK
+        </button>
+      </div>
     </div>
+    <style>
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+    <script>
+      // Auto-close after 5 seconds
+      setTimeout(function(){ 
+        var modal = document.getElementById('successModal');
+        if(modal) {
+          modal.style.opacity = '0';
+          modal.style.transition = 'opacity 0.3s';
+          setTimeout(function(){ modal.style.display = 'none'; }, 300);
+        }
+      }, 5000);
+    </script>
+    @endif
+
+    {{-- Error notifications --}}
+    @if(session('error'))
+    <div style="position:fixed;top:20px;right:20px;z-index:9999;min-width:300px;max-width:400px;">
+      <div class="alert alert-danger alert-dismissible" style="background:#f44336;color:white;padding:15px 20px;border-radius:4px;box-shadow:0 4px 6px rgba(0,0,0,0.1);display:flex;align-items:center;gap:10px;">
+        <i class="fa fa-exclamation-circle" style="font-size:24px;"></i>
+        <span style="flex:1;">{{ session('error') }}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:white;opacity:1;font-size:24px;padding:0;margin:0;background:none;border:none;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    <script>
+      setTimeout(function(){ 
+        $('.alert').fadeOut('slow'); 
+      }, 3000);
+    </script>
+    @endif
 
     <main>
       @yield('content')
@@ -35,6 +79,7 @@
   @include('partials.modals.login')
   @include('partials.modals.registration')
   @include('partials.modals.forgotpassword')
+  @include('partials.modals.logout_confirm')
 
   <!-- Legacy scripts -->
   <script src="/legacy/assets/js/jquery.min.js"></script>

@@ -765,34 +765,34 @@
             </ul>
             <div class="tab-content"> 
               <div role="tabpanel" class="tab-pane active" id="vehicle-overview">
-                @if(!empty($vehicle->VehiclesOverview))
-                  <p>{{ $vehicle->VehiclesOverview }}</p>
-                @else
-                  <div class="vehicle-details">
-                    <h4>{{ $vehicle->BrandName ?? 'Brand' }} {{ $vehicle->VehiclesTitle ?? 'Vehicle' }} Details</h4>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <ul class="vehicle-specs">
-                          <li><strong>Brand:</strong> {{ $vehicle->BrandName ?? 'N/A' }}</li>
-                          <li><strong>Model:</strong> {{ $vehicle->VehiclesTitle ?? 'N/A' }}</li>
-                          <li><strong>Year:</strong> {{ $vehicle->ModelYear ?? 'N/A' }}</li>
-                          <li><strong>Fuel Type:</strong> {{ $vehicle->FuelType ?? 'N/A' }}</li>
-                        </ul>
-                      </div>
-                      <div class="col-md-6">
-                        <ul class="vehicle-specs">
-                          <li><strong>Seating Capacity:</strong> {{ $vehicle->SeatingCapacity ?? 'N/A' }} persons</li>
-                          <li><strong>Price Per Day:</strong> ${{ $vehicle->PricePerDay ?? 'N/A' }}</li>
-                          <li><strong>Registration Date:</strong> {{ $vehicle->RegDate ? date('M d, Y', strtotime($vehicle->RegDate)) : 'N/A' }}</li>
-                        </ul>
-                      </div>
+                <div class="vehicle-details">
+                  <h4>{{ $vehicle->BrandName ?? 'Brand' }} {{ $vehicle->VehiclesTitle ?? 'Vehicle' }} Details</h4>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="vehicle-specs">
+                        <li><strong>Brand:</strong> {{ $vehicle->BrandName ?? 'N/A' }}</li>
+                        <li><strong>Model:</strong> {{ $vehicle->VehiclesTitle ?? 'N/A' }}</li>
+                        <li><strong>Year:</strong> {{ $vehicle->ModelYear ?? 'N/A' }}</li>
+                        <li><strong>Fuel Type:</strong> {{ $vehicle->FuelType ?? 'N/A' }}</li>
+                      </ul>
                     </div>
-                    <div class="vehicle-description">
-                      <p><strong>About this vehicle:</strong></p>
-                      <p>This {{ $vehicle->BrandName ?? 'vehicle' }} {{ $vehicle->VehiclesTitle ?? '' }} is a {{ $vehicle->ModelYear ?? 'modern' }} model featuring {{ strtolower($vehicle->FuelType ?? 'efficient') }} engine and comfortable seating for {{ $vehicle->SeatingCapacity ?? 'multiple' }} passengers. Perfect for city drives and long trips with a competitive daily rental rate.</p>
+                    <div class="col-md-6">
+                      <ul class="vehicle-specs">
+                        <li><strong>Seating Capacity:</strong> {{ $vehicle->SeatingCapacity ?? 'N/A' }} persons</li>
+                        <li><strong>Price Per Day:</strong> ${{ $vehicle->PricePerDay ?? 'N/A' }}</li>
+                        <li><strong>Registration Date:</strong> {{ $vehicle->RegDate ? date('M d, Y', strtotime($vehicle->RegDate)) : 'N/A' }}</li>
+                      </ul>
                     </div>
                   </div>
-                @endif
+                  <div class="vehicle-description">
+                    <p><strong>About this vehicle:</strong></p>
+                    @if(!empty($vehicle->VehiclesOverview))
+                      <p>{{ $vehicle->VehiclesOverview }}</p>
+                    @else
+                      <p>This {{ $vehicle->BrandName ?? 'vehicle' }} {{ $vehicle->VehiclesTitle ?? '' }} is a {{ $vehicle->ModelYear ?? 'modern' }} model featuring {{ strtolower($vehicle->FuelType ?? 'efficient') }} engine and comfortable seating for {{ $vehicle->SeatingCapacity ?? 'multiple' }} passengers. Perfect for city drives and long trips with a competitive daily rental rate.</p>
+                    @endif
+                  </div>
+                </div>
               </div>
               <div role="tabpanel" class="tab-pane" id="accessories"> 
                 <div class="accessories-grid">
@@ -851,9 +851,9 @@
             <div class="form-group">
               <textarea rows="4" class="form-control" name="message" placeholder="Message" required></textarea>
             </div>
-            @if(session('login'))
+            @if(Auth::check())
               <div class="form-group">
-                <input type="submit" class="btn"  name="submit" value="Book Now">
+                <input type="submit" class="btn" name="submit" value="Book Now">
               </div>
             @else
               <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>

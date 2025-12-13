@@ -66,31 +66,13 @@
               @endif
             </td>
             <td>
-              <div class="btn-group btn-group-xs">
-                <button type="button" class="btn btn-info view-query" 
-                        data-id="{{ $query->id }}"
-                        data-name="{{ $query->name ?? 'N/A' }}"
-                        data-email="{{ $query->EmailId }}"
-                        data-phone="{{ $query->ContactNumber ?? 'N/A' }}"
-                        data-message="{{ htmlspecialchars($query->Message ?? '') }}"
-                        data-date="{{ $query->PostingDate ? date('M d, Y h:i A', strtotime($query->PostingDate)) : 'Unknown' }}"
-                        title="View Full Query Details">
-                  <i class="fa fa-eye"></i> View
+              <form action="{{ route('admin.contactqueries.destroy', $query->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete()">
+                @csrf 
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-xs" title="Delete Query">
+                  <i class="fa fa-trash"></i> Delete
                 </button>
-                <button type="button" class="btn btn-success reply-query"
-                        data-email="{{ $query->EmailId }}"
-                        data-name="{{ $query->name ?? 'Customer' }}"
-                        title="Reply via Email">
-                  <i class="fa fa-reply"></i> Reply
-                </button>
-                <form action="{{ route('admin.contactqueries.destroy', $query->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete()">
-                  @csrf 
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger" title="Delete Query">
-                    <i class="fa fa-trash"></i> Delete
-                  </button>
-                </form>
-              </div>
+              </form>
             </td>
           </tr>
           @endforeach

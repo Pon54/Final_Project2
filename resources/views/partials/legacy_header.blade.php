@@ -2,6 +2,25 @@
 use Illuminate\Support\Facades\Auth;
 @endphp
 
+<style>
+  .header_widgets {
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .header_widgets:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+  .header_widgets span {
+    transition: color 0.3s ease;
+  }
+  .header_widgets:hover span {
+    color: #ff2e3c;
+    font-weight: 500;
+  }
+</style>
+
 <header>
   <div class="default-header">
     <div class="container">
@@ -16,14 +35,14 @@ use Illuminate\Support\Facades\Auth;
         <div class="col-sm-9 col-md-10">
           <div class="header_info">
             <div class="header_widgets">
-              <div class="circle_icon"> <i class="fa fa-envelope" aria-hidden="true"></i> </div>
+              <div class="circle_icon" style="display: flex; align-items: center; justify-content: center;"> <i class="fa fa-envelope" aria-hidden="true"></i> </div>
               <p class="uppercase_text">FOR SUPPORT MAIL US :</p>
-              <span>psy@gmail.com</span>
+              <span>{{ $contact_email ?? 'psy@gmail.com' }}</span>
             </div>
             <div class="header_widgets">
-              <div class="circle_icon"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
+              <div class="circle_icon" style="display: flex; align-items: center; justify-content: center;"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
               <p class="uppercase_text">SERVICE HELPLINE CALL US:</p>
-              <span>09057193245</span>
+              <span>{{ $contact_phone ?? '09057193245' }}</span>
             </div>
             <div class="social-follow">
               <!-- Social icons can be added here -->
@@ -73,7 +92,7 @@ use Illuminate\Support\Facades\Auth;
                   <li><a href="{{ url('/my-booking') }}">My Booking</a></li>
                   <li><a href="{{ url('/post-testimonial') }}">Post a Testimonial</a></li>
                   <li><a href="{{ url('/my-testimonials') }}">My Testimonial</a></li>
-                  <li><a href="{{ url('/logout') }}">Sign Out</a></li>
+                  <li><a href="#logoutModal" data-toggle="modal">Sign Out</a></li>
                 @else
                   <li><a href="#loginform" data-toggle="modal">Login</a></li>
                   <li><a href="#signupform" data-toggle="modal">Register</a></li>

@@ -53,11 +53,7 @@ class LegacyController extends Controller
         }
 
         if ($brand) {
-            // Get the brand ID from brand name for proper filtering
-            $brandModel = \App\Models\Brand::where('BrandName', $brand)->first();
-            if ($brandModel) {
-                $vehiclesQuery->where('VehiclesBrand', $brandModel->id);
-            }
+            $vehiclesQuery->where('VehiclesBrand', $brand);
         }
 
         if ($fuel) {
@@ -130,8 +126,16 @@ class LegacyController extends Controller
 
     public function contact()
     {
-        // contact form: placeholder. The view will post back to this route in future.
+        // Get contact info from logged-in user if available
         $contact_info = null;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $contact_info = (object) [
+                'address' => $user->Address ?? 'Address not set',
+                'phone' => $user->ContactNo ?? '',
+                'email' => $user->EmailId ?? ''
+            ];
+        }
         return view('legacy.contact', compact('contact_info'));
     }
 

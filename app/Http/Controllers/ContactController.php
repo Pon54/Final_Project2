@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContactQuery;
 use App\Models\Subscriber;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -25,15 +26,22 @@ class ContactController extends Controller
             'PostingDate' => now(),
         ]);
         
-        $r->session()->flash('msg','Thank you for contacting us! We will get back to you shortly.');
-        return redirect('/contact-us')->with('success', 'Your message has been sent successfully!');
+        $r->session()->flash('success_modal','Thank you for contacting us! We will get back to you shortly.');
+        return redirect('/contact-us');
     }
 
     public function subscribe(Request $r)
     {
+        if (!Auth::check()) {
+            $r->session()->flash('error', 'Please login first to subscribe.');
+            return redirect()->back();
+        }
+
         $r->validate(['subscriberemail' => 'required|email']);
+        
         Subscriber::firstOrCreate(['SubscriberEmail' => $r->subscriberemail]);
-        $r->session()->flash('msg','Subscribed successfully.');
+        
+        $r->session()->flash('success_modal', 'You have subscribed in our Car Portal');
         return redirect()->back();
     }
 }

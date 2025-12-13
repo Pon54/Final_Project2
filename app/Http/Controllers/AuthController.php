@@ -28,7 +28,7 @@ class AuthController extends Controller
             'Password' => bcrypt($r->password),
         ]);
 
-        $r->session()->flash('msg', 'Registration successful. You can login now.');
+        $r->session()->flash('success_modal', 'You have successfully registered');
         return redirect()->back();
     }
 
@@ -36,25 +36,36 @@ class AuthController extends Controller
     {
         $r->validate(['email' => 'required|email','password' => 'required']);
         $user = User::where('EmailId', $r->email)->first();
+        
         if ($user) {
             $stored = $user->Password;
             $input = $r->password;
             $ok = false;
 
+            // Debug logging
+            \Log::info('Login attempt', [
+                'email' => $r->email,
+                'stored_password_length' => strlen($stored),
+                'stored_password_preview' => substr($stored, 0, 10) . '...',
+                'is_bcrypt' => \Str::startsWith($stored, ['$2y$','$2a$','$2b$']),
+                'is_md5' => preg_match('/^[0-9a-f]{32}$/i', $stored) ? 'yes' : 'no'
+            ]);
+
             // If stored password looks like bcrypt/argon (starts with $2y$/$2a$/$2b$), use Hash::check
-            if (Str::startsWith($stored, ['$2y$','$2a$','$2b$','$argon$'])) {
+            if (\Str::startsWith($stored, ['$2y$','$2a$','$2b$','$argon$'])) {
                 $ok = Hash::check($input, $stored);
+                \Log::info('Bcrypt check result: ' . ($ok ? 'success' : 'failed'));
             }
             // If stored password looks like legacy md5 (32 hex chars), compare md5
             elseif (preg_match('/^[0-9a-f]{32}$/i', $stored)) {
-                if (md5($input) === $stored) {
+                $inputMd5 = md5($input);
+                \Log::info('MD5 check', ['input_md5' => $inputMd5, 'stored' => $stored]);
+                if ($inputMd5 === $stored) {
                     $ok = true;
                     // upgrade legacy md5 to bcrypt for better security
                     $user->Password = bcrypt($input);
                     $user->save();
-                    // flash a message for migration visibility and log it
-                    $r->session()->flash('msg', 'Password migrated to secure hash for ' . $user->EmailId);
-                    Log::info('Upgraded legacy MD5 password to bcrypt for user: ' . $user->EmailId);
+                    \Log::info('Upgraded legacy MD5 password to bcrypt for user: ' . $user->EmailId);
                 }
             }
             else {
@@ -69,8 +80,8 @@ class AuthController extends Controller
             if ($ok) {
                 // Use Laravel's built-in authentication
                 Auth::login($user);
-                $r->session()->flash('msg', 'Logged in successfully');
-                return redirect()->back();
+                $r->session()->flash('success_modal', 'You have successfully logged in');
+                return redirect('/');
             }
         }
         $r->session()->flash('error', 'Invalid credentials');

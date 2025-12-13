@@ -92,16 +92,6 @@
 
       <div class="col-md-4">
         <div class="info-panel">
-          <h5><i class="fa fa-lightbulb-o"></i> Information</h5>
-          <div class="alert alert-info">
-            <p><strong>Where this information appears:</strong></p>
-            <ul class="fa-ul">
-              <li><i class="fa fa-li fa-check"></i> Website header</li>
-              <li><i class="fa fa-li fa-check"></i> Contact Us page</li>
-              <li><i class="fa fa-li fa-check"></i> Footer section</li>
-              <li><i class="fa fa-li fa-check"></i> Email signatures</li>
-            </ul>
-          </div>
 
           <div class="current-info">
             <h5><i class="fa fa-eye"></i> Current Information</h5>

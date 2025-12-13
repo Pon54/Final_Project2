@@ -21,7 +21,7 @@ class AdminController extends Controller
         $admin = DB::table('admin')->where('UserName', $username)->where('Password', $password)->first();
         if($admin){
             session(['alogin' => $username]);
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('msg', 'Logged in successfully');
         }
         return redirect()->back()->with('error','Invalid Details');
     }
@@ -85,7 +85,7 @@ class AdminController extends Controller
             ->where('UserName', $username)
             ->update(['Password' => $newPasswordMd5]);
 
-        return redirect()->back()->with('msg', 'Password changed successfully.');
+        return redirect()->back()->with('success_modal', 'Password changed successfully!');
     }
 
     public function logout()

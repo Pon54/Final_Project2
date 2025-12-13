@@ -5,11 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
     public function book(Request $r, $id)
     {
+        // Check if user is logged in
+        if (!Auth::check()) {
+            $r->session()->flash('error', 'Please login first to book a vehicle.');
+            return redirect()->back();
+        }
+
+        // Check if user already has an active booking
+        $existingBooking = Booking::where('userEmail', Auth::user()->EmailId)
+            ->where('Status', '!=', 2) // Not cancelled
+            ->exists();
+        
+        if ($existingBooking) {
+            $r->session()->flash('success_modal', 'You already have an active booking. Please complete or cancel your existing booking first.');
+            return redirect()->back();
+        }
+
         // support both legacy capitalized field names and lowercase ones
         $from = $r->input('fromdate', $r->input('FromDate'));
         $to = $r->input('todate', $r->input('ToDate'));
@@ -42,7 +59,7 @@ class BookingController extends Controller
 
         $booking = Booking::create([
             'BookingNumber' => mt_rand(100000000,999999999),
-            'userEmail' => session('login') ?? $r->input('userEmail') ?? $r->input('useremail') ?? null,
+            'userEmail' => Auth::user()->EmailId,
             'VehicleId' => $id,
             'FromDate' => $from,
             'ToDate' => $to,
@@ -51,7 +68,7 @@ class BookingController extends Controller
         ]);
 
         if($booking){
-            $r->session()->flash('msg','Booking successful.');
+            $r->session()->flash('success_modal','Booking successful! You can view your booking details in My Bookings.');
             return redirect('/my-booking');
         }
         $r->session()->flash('error','Something went wrong.');

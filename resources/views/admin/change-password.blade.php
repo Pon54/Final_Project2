@@ -28,11 +28,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="current_password">Current Password</label>
-                        <input type="password" 
-                               id="current_password" 
-                               name="current_password" 
-                               class="form-control" 
-                               required>
+                        <div style="position: relative;">
+                            <input type="password" 
+                                   id="current_password" 
+                                   name="current_password" 
+                                   class="form-control" 
+                                   required
+                                   style="padding-right: 40px;">
+                            <i class="fa fa-eye toggle-password" 
+                               style="position: absolute; right: 12px; top: 12px; cursor: pointer; color: #999;"
+                               onclick="togglePassword('current_password', this)"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,12 +47,18 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="new_password">New Password</label>
-                        <input type="password" 
-                               id="new_password" 
-                               name="new_password" 
-                               class="form-control" 
-                               required
-                               minlength="6">
+                        <div style="position: relative;">
+                            <input type="password" 
+                                   id="new_password" 
+                                   name="new_password" 
+                                   class="form-control" 
+                                   required
+                                   minlength="6"
+                                   style="padding-right: 40px;">
+                            <i class="fa fa-eye toggle-password" 
+                               style="position: absolute; right: 12px; top: 12px; cursor: pointer; color: #999;"
+                               onclick="togglePassword('new_password', this)"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,12 +67,18 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="new_password_confirmation">Confirm New Password</label>
-                        <input type="password" 
-                               id="new_password_confirmation" 
-                               name="new_password_confirmation" 
-                               class="form-control" 
-                               required
-                               minlength="6">
+                        <div style="position: relative;">
+                            <input type="password" 
+                                   id="new_password_confirmation" 
+                                   name="new_password_confirmation" 
+                                   class="form-control" 
+                                   required
+                                   minlength="6"
+                                   style="padding-right: 40px;">
+                            <i class="fa fa-eye toggle-password" 
+                               style="position: absolute; right: 12px; top: 12px; cursor: pointer; color: #999;"
+                               onclick="togglePassword('new_password_confirmation', this)"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,6 +99,19 @@
 
 @push('scripts')
 <script>
+function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Password confirmation validation
     var newPassword = document.getElementById('new_password');

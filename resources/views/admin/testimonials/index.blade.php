@@ -4,7 +4,6 @@
 
 @section('content')
 <h2>Testimonials</h2>
-@if(session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
 
 <table class="table table-striped">
   <thead><tr><th>ID</th><th>User</th><th>Content</th><th>Status</th><th>Actions</th></tr></thead>

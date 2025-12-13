@@ -26,7 +26,7 @@
 <div class="container">
 <div class="section-header text-center">
 <h2>Find the Best <span>CarForYou</span></h2>
-<p>Nothing beats jet2 holiday</p>
+<p></p>
 </div>
 <div class="row"> 
       

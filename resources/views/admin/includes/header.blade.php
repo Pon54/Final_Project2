@@ -7,7 +7,7 @@
 					<a href="#"><img src="{{ asset('legacy/admin/img/ts-avatar.jpg') }}" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
 					<ul>
 						<li><a href="{{ route('admin.change-password') }}">Change Password</a></li>
-						<li><a href="{{ route('admin.logout') }}">Logout</a></li>
+						<li><a href="#adminLogoutModal" data-toggle="modal">Logout</a></li>
 					</ul>
 				</li>
 		</ul>

@@ -37,6 +37,23 @@
       </div>
       <div class="col-md-6">
         <h3>Contact Info</h3>
+        <style>
+          .contact_detail ul li {
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+          }
+          .contact_detail ul li:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          }
+          .contact_info_m {
+            color: #5a6c7d;
+            cursor: default;
+          }
+        </style>
         <div class="contact_detail">
           <ul>
             <li>
@@ -45,11 +62,11 @@
             </li>
             <li>
               <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-              <div class="contact_info_m"><a href="tel:{{ $contact_info->phone ?? '' }}">{{ $contact_info->phone ?? '' }}</a></div>
+              <div class="contact_info_m">{{ $contact_info->phone ?? 'Phone not set' }}</div>
             </li>
             <li>
               <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-              <div class="contact_info_m"><a href="mailto:{{ $contact_info->email ?? '' }}">{{ $contact_info->email ?? '' }}</a></div>
+              <div class="contact_info_m">{{ $contact_info->email ?? 'Email not set' }}</div>
             </li>
           </ul>
         </div>
