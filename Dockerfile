@@ -5,11 +5,8 @@ FROM php:8.2-apache
 
 
 # Install required PHP extensions for Laravel
-
 RUN apt-get update && apt-get install -y \
-
   git unzip libpq-dev libzip-dev zip \
-
   && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip
 
 
