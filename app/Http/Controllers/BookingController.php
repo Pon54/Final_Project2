@@ -29,14 +29,23 @@ class BookingController extends Controller
             $r->session()->flash('error', 'Invalid booking data');
             return redirect('/car-listing');
         }
-        // naive check for overlapping bookings
-        $overlap = Booking::where('VehicleId',$id)
-            ->where(function($q) use($r){
-                $q->whereBetween('FromDate', [$r->fromdate, $r->todate])
-                  ->orWhereBetween('ToDate', [$r->fromdate, $r->todate]);
+        
+        // Improved check for overlapping bookings
+        $overlap = Booking::where('VehicleId', $id)
+            ->where('Status', '!=', 2) // Exclude cancelled bookings
+            ->where(function($q) use ($from, $to) {
+                // Check if new booking overlaps with existing bookings
+                $q->whereBetween('FromDate', [$from, $to])
+                  ->orWhereBetween('ToDate', [$from, $to])
+                  ->orWhere(function($q2) use ($from, $to) {
+                      // Check if existing booking encompasses new booking
+                      $q2->where('FromDate', '<=', $from)
+                         ->where('ToDate', '>=', $to);
+                  });
             })->exists();
-        if($overlap){
-            $r->session()->flash('error','Car already booked for these days');
+            
+        if ($overlap) {
+            $r->session()->flash('error', 'Car already booked for these days');
             return redirect('/car-listing');
         }
 

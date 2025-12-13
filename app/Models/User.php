@@ -102,4 +102,20 @@ class User extends Authenticatable
     {
         return 'remember_token';
     }
+
+    /**
+     * Get the bookings for the user.
+     */
+    public function bookings()
+    {
+        return $this->hasMany(\App\Models\Booking::class, 'userEmail', 'EmailId');
+    }
+
+    /**
+     * Get the testimonials for the user.
+     */
+    public function testimonials()
+    {
+        return $this->hasMany(\App\Models\Testimonial::class, 'UserEmail', 'EmailId');
+    }
 }

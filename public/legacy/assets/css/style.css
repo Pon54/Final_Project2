@@ -1261,20 +1261,24 @@ nav.navbar {
 .car-title-m {
   overflow: hidden;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .car-title-m h6 {
-  float: left;
-  margin: 0 auto;
+  margin: 0;
   max-width: 245px;
+  flex: 1;
 }
 .car-title-m h6 a {
   color: #111111;
 }
 .car-title-m .price {
   color: #555555;
-  float: right;
   font-size: 16px;
   font-weight: 800;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 
 .inventory_info_m {

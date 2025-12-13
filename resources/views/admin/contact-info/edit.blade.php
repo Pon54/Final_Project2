@@ -9,13 +9,6 @@
     <small class="text-muted">Manage your business contact details displayed on the website</small>
   </div>
   <div class="panel-body">
-    @if(session('msg')) 
-      <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <i class="fa fa-check-circle"></i> {{ session('msg') }}
-      </div> 
-    @endif
-
     @if($errors->any())
       <div class="alert alert-danger alert-dismissible">
         <button type="button" class="close" data-dismiss="alert">&times;</button>

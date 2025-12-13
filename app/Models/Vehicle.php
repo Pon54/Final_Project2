@@ -19,5 +19,9 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Brand::class, 'VehiclesBrand');
     }
-    public $timestamps = false;
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'VehicleId');
+    }
 }

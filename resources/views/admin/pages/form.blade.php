@@ -23,7 +23,7 @@
   </div>
   <div class="form-group">
     <label>Detail</label>
-    <textarea name="detail" class="form-control" rows="6">{{ old('detail', $page->detail ?? '') }}</textarea>
+    <textarea name="detail" class="form-control" rows="15" style="font-family: monospace;">{{ old('detail', $page->detail ?? '') }}</textarea>
   </div>
 
   <button class="btn btn-primary">Save</button>

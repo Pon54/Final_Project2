@@ -13,13 +13,6 @@
     <small class="text-muted">View and manage customer inquiries</small>
   </div>
   <div class="panel-body">
-    @if(session('msg')) 
-      <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ session('msg') }}
-      </div> 
-    @endif
-
     @if($queries->count() > 0)
     <div class="table-responsive">
       <table class="table table-striped table-bordered" id="queries-table">
