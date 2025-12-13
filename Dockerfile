@@ -70,14 +70,20 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 
 
+# Configure Apache to listen on PORT environment variable (for cloud platforms)
+
+RUN echo "Listen \${PORT:-80}" > /etc/apache2/ports.conf \
+
+  && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/g' /etc/apache2/sites-available/000-default.conf
 
 
-# Expose Render's required port
 
-EXPOSE 10000
+# Expose port (cloud platforms will override with PORT env variable)
+
+EXPOSE 80
 
 
 
-# Start Apache
+# Start Apache with environment variable substitution
 
-CMD ["apache2-foreground"]
+CMD sed -i "s/80/${PORT:-80}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf 2>/dev/null; apache2-foreground
