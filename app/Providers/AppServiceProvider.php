@@ -41,9 +41,11 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
             $view->with('contact_email', $contact_email)->with('contact_phone', $contact_phone);
-            
-            if ($this->app->environment('production')) {
-            URL::forceScheme('https');}
         });
+        
+        // Force HTTPS in production
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
