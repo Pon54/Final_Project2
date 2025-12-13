@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -40,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
             $view->with('contact_email', $contact_email)->with('contact_phone', $contact_phone);
+            
+            if ($this->app->environment('production')) {
+            URL::forceScheme('https');}
         });
     }
 }
