@@ -70,20 +70,23 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 
 
-# Configure Apache to listen on PORT environment variable (for cloud platforms)
-
-RUN echo "Listen \${PORT:-80}" > /etc/apache2/ports.conf \
-
-  && sed -i 's/<VirtualHost \*:80>/<VirtualHost *:${PORT:-80}>/g' /etc/apache2/sites-available/000-default.conf
-
-
-
-# Expose port (cloud platforms will override with PORT env variable)
+# Expose port 80 (HTTP)
 
 EXPOSE 80
 
 
 
-# Start Apache with environment variable substitution
+# Create startup script to handle dynamic PORT
 
-CMD sed -i "s/80/${PORT:-80}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf 2>/dev/null; apache2-foreground
+RUN printf '#!/bin/bash\n\
+PORT=${PORT:-80}\n\
+echo "Listen $PORT" > /etc/apache2/ports.conf\n\
+echo "ServerName localhost" >> /etc/apache2/ports.conf\n\
+sed -i "s/<VirtualHost \\*:80>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-available/000-default.conf\n\
+exec apache2-foreground\n' > /usr/local/bin/start-apache.sh && chmod +x /usr/local/bin/start-apache.sh
+
+
+
+# Start Apache
+
+CMD ["/usr/local/bin/start-apache.sh"]
