@@ -48,12 +48,19 @@ class AuthController extends Controller
 
     public function login(Request $r)
     {
-        // Log everything for debugging
-        \Log::info('=== LOGIN REQUEST STARTED ===');
-        \Log::info('Request method: ' . $r->method());
-        \Log::info('Request all data: ' . json_encode($r->all()));
-        
         try {
+            // First check if APP_KEY is set
+            if (empty(config('app.key'))) {
+                \Log::error('APP_KEY is not set!');
+                return redirect('/')->with('error', 'Application configuration error. Please contact administrator.');
+            }
+
+            // Log everything for debugging
+            \Log::info('=== LOGIN REQUEST STARTED ===');
+            \Log::info('Request method: ' . $r->method());
+            \Log::info('Has email: ' . ($r->has('email') ? 'yes' : 'no'));
+            \Log::info('Has password: ' . ($r->has('password') ? 'yes' : 'no'));
+            
             // Validate
             $r->validate([
                 'email' => 'required|email',
@@ -123,7 +130,13 @@ class AuthController extends Controller
             \Log::error('Error: ' . $e->getMessage());
             \Log::error('File: ' . $e->getFile() . ':' . $e->getLine());
             \Log::error('Trace: ' . $e->getTraceAsString());
-            return redirect('/')->with('error', 'Login error: ' . $e->getMessage());
+            
+            // Check if it's encryption key error
+            if (strpos($e->getMessage(), 'encryption key') !== false || strpos($e->getMessage(), 'APP_KEY') !== false) {
+                return redirect('/')->with('error', 'Server configuration error: APP_KEY not set. Please contact administrator.');
+            }
+            
+            return redirect('/')->with('error', 'Login error. Please try again or contact support.');
         }
     }
 

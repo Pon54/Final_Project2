@@ -44,6 +44,22 @@ Route::get('/page', [PageController::class, 'show']);
 | Auth (public)
 |--------------------------------------------------------------------------
 */
+Route::get('/test-config', function() {
+    return response()->json([
+        'app_key_set' => !empty(config('app.key')),
+        'app_key_length' => strlen(config('app.key')),
+        'app_env' => config('app.env'),
+        'app_debug' => config('app.debug'),
+        'db_connection' => config('database.default'),
+        'db_host' => config('database.connections.mysql.host'),
+        'session_driver' => config('session.driver'),
+        'cache_driver' => config('cache.default'),
+        'storage_writable' => is_writable(storage_path()),
+        'storage_logs_exists' => file_exists(storage_path('logs')),
+        'storage_framework_exists' => file_exists(storage_path('framework/sessions')),
+    ]);
+});
+
 Route::get('/test-login', function() {
     \Log::info('Test route hit');
     return response()->json(['status' => 'ok', 'message' => 'Test route works']);
