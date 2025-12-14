@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Error</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+        .error-icon {
+            font-size: 80px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .error-code {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .instructions {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: left;
+            margin: 20px 0;
+        }
+        .instructions h2 {
+            color: #2980b9;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .instructions ol {
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+        .instructions code {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon">⚠️</div>
+        <h1>Application Configuration Error</h1>
+        <p class="error-code">APP_KEY is not set</p>
+        <p>The application encryption key has not been configured. This is required for secure cookie and session handling.</p>
+        
+        <div class="instructions">
+            <h2>🔧 How to Fix (For Administrators):</h2>
+            <ol>
+                <li>Go to your <strong>Render Dashboard</strong></li>
+                <li>Select your service: <strong>final-project2-1-p4o3</strong></li>
+                <li>Click on <strong>"Environment"</strong> tab</li>
+                <li>Add a new environment variable:
+                    <br><code>APP_KEY = base64:t4XSDmJOV3lwTfhZ0/U4CNURTGS4ut/KJBefLh1O9bQ=</code>
+                </li>
+                <li>Click <strong>"Save Changes"</strong></li>
+                <li>Wait for automatic redeployment (3-5 minutes)</li>
+                <li>Refresh this page</li>
+            </ol>
+        </div>
+
+        <p><small>Error Code: APP_KEY_MISSING | Server Error 500</small></p>
+        <a href="/diagnose.php" class="btn">View Full Diagnostics</a>
+    </div>
+</body>
+</html>

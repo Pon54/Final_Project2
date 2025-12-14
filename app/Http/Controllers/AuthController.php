@@ -51,8 +51,13 @@ class AuthController extends Controller
         try {
             // First check if APP_KEY is set
             if (empty(config('app.key'))) {
-                \Log::error('APP_KEY is not set!');
-                return redirect('/')->with('error', 'Application configuration error. Please contact administrator.');
+                \Log::error('CRITICAL: APP_KEY is not set! Cannot encrypt cookies/sessions.');
+                \Log::error('Please set APP_KEY environment variable in Render dashboard.');
+                return response()->json([
+                    'error' => 'Server Configuration Error',
+                    'message' => 'APP_KEY is not configured. Please contact administrator.',
+                    'fix' => 'Set APP_KEY in Render Environment Variables'
+                ], 500);
             }
 
             // Log everything for debugging
@@ -60,6 +65,7 @@ class AuthController extends Controller
             \Log::info('Request method: ' . $r->method());
             \Log::info('Has email: ' . ($r->has('email') ? 'yes' : 'no'));
             \Log::info('Has password: ' . ($r->has('password') ? 'yes' : 'no'));
+            \Log::info('APP_KEY is set: YES');
             
             // Validate
             $r->validate([
