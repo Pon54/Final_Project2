@@ -80,9 +80,11 @@ use Illuminate\Support\Facades\Auth;
             <li class="dropdown"> 
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle" aria-hidden="true"></i> 
-                @if(Auth::check())
+                @auth
                   {{ Auth::user()->FullName ?? Auth::user()->name ?? 'User' }}
-                @endif
+                @else
+                  Guest
+                @endauth
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu">

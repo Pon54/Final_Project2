@@ -1,3 +1,4 @@
 http://localhost/fyp-car-rental/admin/index.php
 User: admin
-pass: sherjaypasayloon
+pass: admin123
+

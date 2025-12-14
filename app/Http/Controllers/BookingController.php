@@ -13,8 +13,7 @@ class BookingController extends Controller
     {
         // Check if user is logged in
         if (!Auth::check()) {
-            $r->session()->flash('error', 'Please login first to book a vehicle.');
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Please login first to book a vehicle.');
         }
 
         // Check if user already has an active booking
@@ -23,8 +22,7 @@ class BookingController extends Controller
             ->exists();
         
         if ($existingBooking) {
-            $r->session()->flash('success_modal', 'You already have an active booking. Please complete or cancel your existing booking first.');
-            return redirect()->back();
+            return redirect()->back()->with('error', 'You already have an active booking. Please complete or cancel your existing booking first.');
         }
 
         // support both legacy capitalized field names and lowercase ones
@@ -43,8 +41,7 @@ class BookingController extends Controller
             'message' => 'nullable|string',
         ]);
         if ($validator->fails()) {
-            $r->session()->flash('error', 'Invalid booking data');
-            return redirect('/car-listing');
+            return redirect('/car-listing')->with('error', 'Invalid booking data. Please check your dates and try again.');
         }
         // naive check for overlapping bookings
         $overlap = Booking::where('VehicleId',$id)
@@ -53,8 +50,7 @@ class BookingController extends Controller
                   ->orWhereBetween('ToDate', [$r->fromdate, $r->todate]);
             })->exists();
         if($overlap){
-            $r->session()->flash('error','Car already booked for these days');
-            return redirect('/car-listing');
+            return redirect('/car-listing')->with('error', 'This car is already booked for the selected dates. Please choose different dates.');
         }
 
         $booking = Booking::create([
@@ -68,10 +64,8 @@ class BookingController extends Controller
         ]);
 
         if($booking){
-            $r->session()->flash('success_modal','Booking successful! You can view your booking details in My Bookings.');
-            return redirect('/my-booking');
+            return redirect('/my-booking')->with('success', 'Booking successful! Your reservation has been confirmed. You can view your booking details below.');
         }
-        $r->session()->flash('error','Something went wrong.');
-        return redirect('/car-listing');
+        return redirect('/car-listing')->with('error', 'Something went wrong. Please try again.');
     }
 }

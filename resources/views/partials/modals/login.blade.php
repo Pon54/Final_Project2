@@ -12,10 +12,11 @@
               <form method="post" action="{{ url('login') }}">
                 @csrf
                 <div class="form-group">
-                  <input type="email" class="form-control" name="email" placeholder="Email address*">
+                  <input type="email" class="form-control" name="email" placeholder="Email address*" required>
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" name="password" placeholder="Password*">
+                <div class="form-group" style="position:relative;">
+                  <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password*" style="padding-right:40px;" required>
+                  <i class="fa fa-eye" id="toggleLoginPassword" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);cursor:pointer;color:#888;" onclick="togglePasswordVisibility('loginPassword', 'toggleLoginPassword')"></i>
                 </div>
                 <div class="form-group">
                   <input type="submit" name="login" value="Login" class="btn btn-block">

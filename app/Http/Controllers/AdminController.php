@@ -85,7 +85,7 @@ class AdminController extends Controller
             ->where('UserName', $username)
             ->update(['Password' => $newPasswordMd5]);
 
-        return redirect()->back()->with('success_modal', 'Password changed successfully!');
+        return redirect()->back()->with('success', 'Password changed successfully!');
     }
 
     public function logout()

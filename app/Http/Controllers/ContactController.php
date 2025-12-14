@@ -26,22 +26,19 @@ class ContactController extends Controller
             'PostingDate' => now(),
         ]);
         
-        $r->session()->flash('success_modal','Thank you for contacting us! We will get back to you shortly.');
-        return redirect('/contact-us');
+        return redirect('/contact-us')->with('success', 'Thank you for contacting us! We will get back to you shortly.');
     }
 
     public function subscribe(Request $r)
     {
         if (!Auth::check()) {
-            $r->session()->flash('error', 'Please login first to subscribe.');
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Please login first to subscribe.');
         }
 
         $r->validate(['subscriberemail' => 'required|email']);
         
         Subscriber::firstOrCreate(['SubscriberEmail' => $r->subscriberemail]);
         
-        $r->session()->flash('success_modal', 'You have subscribed in our Car Portal');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Thank you for subscribing! You will receive exclusive deals and updates from our Car Rental Portal.');
     }
 }

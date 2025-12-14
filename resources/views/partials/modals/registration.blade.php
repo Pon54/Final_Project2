@@ -15,13 +15,14 @@
                   <input type="text" class="form-control" name="fullname" placeholder="Full Name" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="mobileno" placeholder="Mobile Number" maxlength="10" required>
+                  <input type="text" class="form-control" name="mobileno" placeholder="Mobile Number (Optional)" maxlength="10">
                 </div>
                 <div class="form-group">
                   <input type="email" class="form-control" name="emailid" id="emailid" placeholder="Email Address" required>
                 </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <div class="form-group" style="position:relative;">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required style="padding-right:40px;">
+                  <i class="fa fa-eye" id="togglePassword" style="position:absolute;right:15px;top:50%;transform:translateY(-50%);cursor:pointer;color:#888;" onclick="togglePasswordVisibility('password', 'togglePassword')"></i>
                 </div>
                 <div class="form-group checkbox">
                   <input type="checkbox" id="terms_agree" required checked>

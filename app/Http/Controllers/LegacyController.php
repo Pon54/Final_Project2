@@ -256,7 +256,7 @@ class LegacyController extends Controller
         }
         
         $user = Auth::user();
-        $testimonials = \App\Models\Testimonial::where('UserEmail', $user->EmailId)->orderBy('PostingDate', 'desc')->get();
+        $testimonials = \App\Models\Testimonial::where('UserEmail', $user->EmailId)->orderBy('created_at', 'desc')->get();
         return view('legacy.my-testimonials', compact('testimonials'));
     }
 }

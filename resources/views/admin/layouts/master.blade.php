@@ -25,15 +25,15 @@
     @include('partials.modals.admin_logout_confirm')
 
     {{-- Success Modal for Admin --}}
-    @if(session('success_modal'))
+    @if(session('success'))
     <div id="adminSuccessModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;">
-      <div style="background:white;padding:40px;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;max-width:400px;animation:slideIn 0.3s ease-out;">
+      <div style="background:white;padding:40px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;max-width:450px;animation:slideIn 0.3s ease-out;">
         <div style="margin-bottom:20px;">
-          <i class="fa fa-check-circle" style="font-size:60px;color:#4caf50;"></i>
+          <i class="fa fa-smile-o" style="font-size:70px;color:#4CAF50;"></i>
         </div>
-        <h3 style="color:#2c3e50;margin-bottom:15px;font-weight:600;">Success!</h3>
-        <p style="color:#7f8c8d;font-size:16px;margin-bottom:30px;">{{ session('success_modal') }}</p>
-        <button onclick="document.getElementById('adminSuccessModal').style.display='none'" class="btn btn-primary" style="padding:10px 40px;font-size:16px;background:#4caf50;border:none;border-radius:4px;cursor:pointer;">
+        <h3 style="color:#2c3e50;margin-bottom:15px;font-weight:600;font-size:24px;">Success!</h3>
+        <p style="color:#7f8c8d;font-size:16px;margin-bottom:30px;line-height:1.5;">{{ session('success') }}</p>
+        <button onclick="document.getElementById('adminSuccessModal').style.display='none'" class="btn btn-success" style="padding:12px 50px;font-size:16px;background:#4CAF50;border:none;border-radius:6px;cursor:pointer;color:white;font-weight:600;">
           OK
         </button>
       </div>
@@ -50,21 +50,38 @@
         }
       }
     </style>
-    <script>
-      setTimeout(function(){ 
-        var modal = document.getElementById('adminSuccessModal');
-        if(modal) {
-          modal.style.opacity = '0';
-          modal.style.transition = 'opacity 0.3s';
-          setTimeout(function(){ modal.style.display = 'none'; }, 300);
-        }
-      }, 6000);
-    </script>
+    @endif
+
+    {{-- Error Modal for Admin --}}
+    @if(session('error'))
+    <div id="adminErrorModal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;">
+      <div style="background:white;padding:40px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;max-width:450px;animation:slideIn 0.3s ease-out;">
+        <div style="margin-bottom:20px;">
+          <i class="fa fa-frown-o" style="font-size:70px;color:#f44336;"></i>
+        </div>
+        <h3 style="color:#2c3e50;margin-bottom:15px;font-weight:600;font-size:24px;">Oops!</h3>
+        <p style="color:#7f8c8d;font-size:16px;margin-bottom:30px;line-height:1.5;">{{ session('error') }}</p>
+        <button onclick="document.getElementById('adminErrorModal').style.display='none'" class="btn btn-danger" style="padding:12px 50px;font-size:16px;background:#f44336;border:none;border-radius:6px;cursor:pointer;color:white;font-weight:600;">
+          OK
+        </button>
+      </div>
+    </div>
     @endif
 
     <script src="{{ asset('legacy/admin/js/jquery.min.js') }}"></script>
     <script src="{{ asset('legacy/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('legacy/admin/js/main.js') }}"></script>
+    
+    <script>
+        // Auto-hide admin success and error modals after 5 seconds
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('#adminSuccessModal').fadeOut('slow');
+                $('#adminErrorModal').fadeOut('slow');
+            }, 5000);
+        });
+    </script>
+    
     {{-- small UX helpers: toast container and ajax feedback --}}
     <div id="admin-toast-container" style="position:fixed;right:20px;top:20px;z-index:99999"></div>
     <script>

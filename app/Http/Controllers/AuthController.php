@@ -18,7 +18,8 @@ class AuthController extends Controller
             $r->validate([
                 'fullname' => 'required',
                 'emailid' => 'required|email|unique:tblusers,EmailId',
-                'password' => 'required|min:6'
+                'password' => 'required|min:6',
+                'mobileno' => 'nullable|digits:10'
             ]);
 
             $user = User::create([
@@ -29,16 +30,19 @@ class AuthController extends Controller
                 'Password' => bcrypt($r->password),
             ]);
 
-            // Use URL parameter instead of session for one-time modal
-            return redirect('/?modal=success_register');
+            // Redirect to homepage with success message
+            return redirect('/')->with('success', 'You have successfully registered! You can now log in.');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Set error in both sessions
+            // Get validation errors
             $errors = $e->validator->errors();
             $errorMsg = $errors->first();
             
-            // Use URL parameter instead of session
-            return redirect('/?modal=error&msg=' . urlencode($errorMsg));
+            // Redirect back with error message
+            return redirect('/')->with('error', $errorMsg);
+        } catch (\Exception $e) {
+            // Handle any other errors
+            return redirect('/')->with('error', 'Registration failed. Please try again.');
         }
     }
 
@@ -88,20 +92,37 @@ class AuthController extends Controller
             }
 
             if ($ok) {
-                // Use Laravel's built-in authentication
+                // Use Laravel's built-in authentication (without remember token since column doesn't exist)
                 Auth::login($user);
+                
+                // Regenerate session to prevent fixation
+                request()->session()->regenerate();
+                
+                // Ensure session is started for legacy pages
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
                 
                 // Set PHP session for legacy pages
                 $_SESSION['login'] = $user->EmailId;
                 $_SESSION['fname'] = $user->FullName;
                 
-                // Use URL parameter for modal
-                return redirect('/?modal=success_login');
+                // Log for debugging
+                \Log::info('User logged in successfully', [
+                    'user_id' => $user->id,
+                    'email' => $user->EmailId,
+                    'name' => $user->FullName,
+                    'auth_check' => Auth::check(),
+                    'auth_id' => Auth::id()
+                ]);
+                
+                // Redirect with success message
+                return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '! You have successfully logged in.');
             }
         }
         
-        // Use URL parameter for error
-        return redirect('/?modal=error&msg=' . urlencode('Invalid credentials'));
+        // Redirect with error message
+        return redirect('/')->with('error', 'Invalid credentials. Please try again.');
     }
 
     public function forgot(Request $r)
