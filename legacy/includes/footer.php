@@ -107,7 +107,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
       <div class="modal-body" style="padding: 40px;">
         <div style="font-size: 80px; color: #f44336; margin-bottom: 20px;">😞</div>
         <h3 style="color: #333; margin-bottom: 15px;">Oops!</h3>
-        <p style="font-size: 18px; color: #666;" id="errorMessage"><?php echo isset($_SESSION['error_modal']) ? htmlspecialchars($_SESSION['error_modal']) : 'An error occurred'; ?></p>
+        <p style="font-size: 18px; color: #666;" id="errorMessage">An error occurred</p>
         <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top: 20px; padding: 10px 40px; font-size: 16px;">OK</button>
       </div>
     </div>
@@ -115,21 +115,36 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 </div>
 
 <script>
-<?php if(isset($_SESSION['success_modal'])): ?>
+<?php 
+// Check both Laravel session and PHP session
+$hasSuccess = (function_exists('session') && session('success_modal')) || (isset($_SESSION['success_modal']));
+$hasError = (function_exists('session') && session('error_modal')) || (isset($_SESSION['error_modal']));
+$errorMsg = '';
+if ($hasError) {
+    $errorMsg = function_exists('session') && session('error_modal') ? session('error_modal') : (isset($_SESSION['error_modal']) ? $_SESSION['error_modal'] : 'An error occurred');
+}
+?>
+
+<?php if($hasSuccess): ?>
   $(document).ready(function() {
+    console.log('Showing success modal');
     $('#successModal').modal('show');
   });
 <?php 
-  unset($_SESSION['success_modal']); 
+  if(function_exists('session')) session()->forget('success_modal');
+  if(isset($_SESSION['success_modal'])) unset($_SESSION['success_modal']); 
 endif; 
 ?>
 
-<?php if(isset($_SESSION['error_modal'])): ?>
+<?php if($hasError): ?>
   $(document).ready(function() {
+    console.log('Showing error modal');
+    $('#errorMessage').text('<?php echo addslashes($errorMsg); ?>');
     $('#errorModal').modal('show');
   });
 <?php 
-  unset($_SESSION['error_modal']); 
+  if(function_exists('session')) session()->forget('error_modal');
+  if(isset($_SESSION['error_modal'])) unset($_SESSION['error_modal']); 
 endif; 
 ?>
 </script>

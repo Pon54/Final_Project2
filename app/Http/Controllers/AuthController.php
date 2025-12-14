@@ -29,15 +29,25 @@ class AuthController extends Controller
                 'Password' => bcrypt($r->password),
             ]);
 
-            // Set PHP session directly for legacy pages
+            // Set both Laravel session and PHP session for compatibility
+            session(['success_modal' => 'You have successfully registered']);
             $_SESSION['success_modal'] = 'You have successfully registered';
-            return redirect()->back();
+            
+            \Log::info('Registration successful, session set', ['session' => session('success_modal')]);
+            
+            return redirect('/');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Set error in PHP session for legacy pages
+            // Set error in both sessions
             $errors = $e->validator->errors();
-            $_SESSION['error_modal'] = $errors->first();
-            return redirect()->back();
+            $errorMsg = $errors->first();
+            
+            session(['error_modal' => $errorMsg]);
+            $_SESSION['error_modal'] = $errorMsg;
+            
+            \Log::info('Registration failed', ['error' => $errorMsg]);
+            
+            return redirect('/');
         }
     }
 
