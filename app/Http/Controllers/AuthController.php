@@ -14,22 +14,31 @@ class AuthController extends Controller
 {
     public function register(Request $r)
     {
-        $r->validate([
-            'fullname' => 'required',
-            'emailid' => 'required|email|unique:tblusers,EmailId',
-            'password' => 'required|min:6'
-        ]);
+        try {
+            $r->validate([
+                'fullname' => 'required',
+                'emailid' => 'required|email|unique:tblusers,EmailId',
+                'password' => 'required|min:6'
+            ]);
 
-        $user = User::create([
-            'FullName' => $r->fullname,
-            'EmailId' => $r->emailid,
-            'ContactNo' => $r->mobileno ?? null,
-            // legacy used md5; we store bcrypt but keep field name
-            'Password' => bcrypt($r->password),
-        ]);
+            $user = User::create([
+                'FullName' => $r->fullname,
+                'EmailId' => $r->emailid,
+                'ContactNo' => $r->mobileno ?? null,
+                // legacy used md5; we store bcrypt but keep field name
+                'Password' => bcrypt($r->password),
+            ]);
 
-        $r->session()->flash('success_modal', 'You have successfully registered');
-        return redirect()->back();
+            // Set PHP session directly for legacy pages
+            $_SESSION['success_modal'] = 'You have successfully registered';
+            return redirect()->back();
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Set error in PHP session for legacy pages
+            $errors = $e->validator->errors();
+            $_SESSION['error_modal'] = $errors->first();
+            return redirect()->back();
+        }
     }
 
     public function login(Request $r)

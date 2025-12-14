@@ -107,30 +107,29 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
       <div class="modal-body" style="padding: 40px;">
         <div style="font-size: 80px; color: #f44336; margin-bottom: 20px;">😞</div>
         <h3 style="color: #333; margin-bottom: 15px;">Oops!</h3>
-        <p style="font-size: 18px; color: #666;" id="errorMessage">An error occurred</p>
+        <p style="font-size: 18px; color: #666;" id="errorMessage"><?php echo isset($_SESSION['error_modal']) ? htmlspecialchars($_SESSION['error_modal']) : 'An error occurred'; ?></p>
         <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top: 20px; padding: 10px 40px; font-size: 16px;">OK</button>
       </div>
     </div>
   </div>
 </div>
 
-<?php if(isset($_SESSION['success_modal'])): ?>
 <script>
+<?php if(isset($_SESSION['success_modal'])): ?>
   $(document).ready(function() {
     $('#successModal').modal('show');
   });
-</script>
 <?php 
   unset($_SESSION['success_modal']); 
 endif; 
 ?>
 
-<?php if($errors->any()): ?>
-<script>
+<?php if(isset($_SESSION['error_modal'])): ?>
   $(document).ready(function() {
-    var errorMsg = '<?php echo addslashes($errors->first()); ?>';
-    $('#errorMessage').text(errorMsg);
     $('#errorModal').modal('show');
   });
+<?php 
+  unset($_SESSION['error_modal']); 
+endif; 
+?>
 </script>
-<?php endif; ?>
