@@ -31,10 +31,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_NO_INTERACTION=1
 ENV COMPOSER_MEMORY_LIMIT=-1
+ENV COMPOSER_PROCESS_TIMEOUT=600
+ENV COMPOSER_HTACCESS_PROTECT=0
 
-# Install Laravel dependencies with retry logic
-RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist || \
-    (composer clear-cache && composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist)
+# Clear any existing composer cache and install dependencies
+RUN rm -rf /root/.composer/cache/* && \
+    composer clear-cache && \
+    composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist --no-cache || \
+    (echo "First attempt failed, retrying with cache clear..." && \
+     rm -rf vendor/ composer.lock && \
+     composer clear-cache && \
+     composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist --no-cache)
 
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
