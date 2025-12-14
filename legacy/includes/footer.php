@@ -116,21 +116,38 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 
 <script>
 <?php 
-// Check both Laravel session and PHP session
-$hasSuccess = (function_exists('session') && session('success_modal')) || (isset($_SESSION['success_modal']));
-$hasError = (function_exists('session') && session('error_modal')) || (isset($_SESSION['error_modal']));
+// ONLY check session values if they truly exist and have content
+$hasSuccess = false;
+$hasError = false;
 $errorMsg = '';
-if ($hasError) {
-    $errorMsg = function_exists('session') && session('error_modal') ? session('error_modal') : (isset($_SESSION['error_modal']) ? $_SESSION['error_modal'] : 'An error occurred');
+
+// Check Laravel session first
+if(function_exists('session')) {
+    $laravelSuccess = session('success_modal');
+    $laravelError = session('error_modal');
+    
+    if(!empty($laravelSuccess)) {
+        $hasSuccess = true;
+        session()->forget('success_modal');
+    }
+    if(!empty($laravelError)) {
+        $hasError = true;
+        $errorMsg = $laravelError;
+        session()->forget('error_modal');
+    }
 }
 
-// Clear sessions immediately after reading
-if(function_exists('session')) {
-    session()->forget('success_modal');
-    session()->forget('error_modal');
+// Check PHP session as fallback
+if(!$hasSuccess && isset($_SESSION['success_modal']) && !empty($_SESSION['success_modal'])) {
+    $hasSuccess = true;
+    unset($_SESSION['success_modal']);
 }
-if(isset($_SESSION['success_modal'])) unset($_SESSION['success_modal']); 
-if(isset($_SESSION['error_modal'])) unset($_SESSION['error_modal']); 
+
+if(!$hasError && isset($_SESSION['error_modal']) && !empty($_SESSION['error_modal'])) {
+    $hasError = true;
+    $errorMsg = $_SESSION['error_modal'];
+    unset($_SESSION['error_modal']);
+}
 ?>
 
 <?php if($hasSuccess): ?>
