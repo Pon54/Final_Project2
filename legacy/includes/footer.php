@@ -85,3 +85,28 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
     </div>
   </div>
 </footer>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border-radius: 15px; text-align: center;">
+      <div class="modal-body" style="padding: 40px;">
+        <div style="font-size: 80px; color: #4CAF50; margin-bottom: 20px;">😊</div>
+        <h3 style="color: #333; margin-bottom: 15px;">Success!</h3>
+        <p style="font-size: 18px; color: #666;">You have successfully registered</p>
+        <button type="button" class="btn btn-success" data-dismiss="modal" style="margin-top: 20px; padding: 10px 40px; font-size: 16px;">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php if(isset($_SESSION['success_modal'])): ?>
+<script>
+  $(document).ready(function() {
+    $('#successModal').modal('show');
+  });
+</script>
+<?php 
+  unset($_SESSION['success_modal']); 
+endif; 
+?>
