@@ -49,86 +49,70 @@ class AuthController extends Controller
     public function login(Request $r)
     {
         try {
-            $r->validate(['email' => 'required|email','password' => 'required']);
+            // Validate input
+            $validated = $r->validate([
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
+            
+            \Log::info('Login attempt started', ['email' => $r->email]);
+            
+            // Find user
             $user = User::where('EmailId', $r->email)->first();
             
-            if ($user) {
-                $stored = $user->Password;
-                $input = $r->password;
-                $ok = false;
-
-                // Debug logging
-                \Log::info('Login attempt', [
-                    'email' => $r->email,
-                    'stored_password_length' => strlen($stored),
-                    'stored_password_preview' => substr($stored, 0, 10) . '...',
-                    'is_bcrypt' => \Str::startsWith($stored, ['$2y$','$2a$','$2b$']),
-                    'is_md5' => preg_match('/^[0-9a-f]{32}$/i', $stored) ? 'yes' : 'no'
-                ]);
-
-                // If stored password looks like bcrypt/argon (starts with $2y$/$2a$/$2b$), use Hash::check
-                if (\Str::startsWith($stored, ['$2y$','$2a$','$2b$','$argon$'])) {
-                    $ok = Hash::check($input, $stored);
-                    \Log::info('Bcrypt check result: ' . ($ok ? 'success' : 'failed'));
-                }
-                // If stored password looks like legacy md5 (32 hex chars), compare md5
-                elseif (preg_match('/^[0-9a-f]{32}$/i', $stored)) {
-                    $inputMd5 = md5($input);
-                    \Log::info('MD5 check', ['input_md5' => $inputMd5, 'stored' => $stored]);
-                    if ($inputMd5 === $stored) {
-                        $ok = true;
-                        // upgrade legacy md5 to bcrypt for better security
-                        $user->Password = bcrypt($input);
-                        $user->save();
-                        \Log::info('Upgraded legacy MD5 password to bcrypt for user: ' . $user->EmailId);
-                    }
-                }
-                else {
-                    // last resort: try PHP password_verify, wrapped to avoid exceptions
-                    try {
-                        $ok = password_verify($input, $stored);
-                    } catch (\Throwable $e) {
-                        $ok = false;
-                    }
-                }
-
-                if ($ok) {
-                    try {
-                        // Regenerate session to prevent fixation
-                        $r->session()->regenerate();
-                        
-                        // Set session variables manually (avoid Auth::login which requires remember_token)
-                        session([
-                            'login' => $user->EmailId,
-                            'fname' => $user->FullName,
-                            'user_id' => $user->id
-                        ]);
-                        
-                        // Log for debugging
-                        \Log::info('User logged in successfully', [
-                            'user_id' => $user->id,
-                            'email' => $user->EmailId,
-                            'name' => $user->FullName
-                        ]);
-                        
-                        // Redirect with success message
-                        return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '! You have successfully logged in.');
-                    } catch (\Exception $e) {
-                        \Log::error('Session error during login: ' . $e->getMessage());
-                        return redirect('/')->with('error', 'Login session error: ' . $e->getMessage());
-                    }
-                }
+            if (!$user) {
+                \Log::warning('Login failed - user not found', ['email' => $r->email]);
+                return redirect('/')->with('error', 'Invalid credentials. Please try again.');
             }
             
-            // Redirect with error message
-            return redirect('/')->with('error', 'Invalid credentials. Please try again.');
+            $stored = $user->Password;
+            $input = $r->password;
+            $ok = false;
+
+            // Check password
+            if (\Str::startsWith($stored, ['$2y$','$2a$','$2b$','$argon$'])) {
+                $ok = Hash::check($input, $stored);
+            } elseif (preg_match('/^[0-9a-f]{32}$/i', $stored)) {
+                if (md5($input) === $stored) {
+                    $ok = true;
+                    // Upgrade to bcrypt
+                    $user->Password = bcrypt($input);
+                    $user->save();
+                }
+            }
+
+            if (!$ok) {
+                \Log::warning('Login failed - invalid password', ['email' => $r->email]);
+                return redirect('/')->with('error', 'Invalid credentials. Please try again.');
+            }
+            
+            // Set session - simple approach
+            \Log::info('Setting session for user', ['user_id' => $user->id, 'email' => $user->EmailId]);
+            
+            $r->session()->put('login', $user->EmailId);
+            $r->session()->put('fname', $user->FullName);
+            $r->session()->put('user_id', $user->id);
+            $r->session()->save(); // Force save
+            
+            \Log::info('Login successful', [
+                'user_id' => $user->id,
+                'session_login' => $r->session()->get('login'),
+                'session_fname' => $r->session()->get('fname')
+            ]);
+            
+            return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '! You have successfully logged in.');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Login validation error: ' . $e->getMessage());
+            \Log::error('Login validation error', ['errors' => $e->errors()]);
             return redirect('/')->with('error', 'Please provide valid email and password.');
         } catch (\Exception $e) {
-            \Log::error('Login error: ' . $e->getMessage() . ' | Trace: ' . $e->getTraceAsString());
-            return redirect('/')->with('error', 'Login failed: ' . $e->getMessage());
+            \Log::error('Login exception', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect('/')->with('error', 'Login error: ' . $e->getMessage());
         }
     }
 

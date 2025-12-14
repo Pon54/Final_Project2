@@ -61,8 +61,18 @@ sed -i "s/<VirtualHost \*:[0-9]*>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-av
 # Set ServerName to suppress warning\n\
 echo "ServerName localhost" >> /etc/apache2/apache2.conf\n\
 \n\
+# Ensure storage directories exist with correct permissions\n\
+mkdir -p /var/www/html/storage/framework/sessions\n\
+mkdir -p /var/www/html/storage/framework/cache/data\n\
+mkdir -p /var/www/html/storage/framework/views\n\
+mkdir -p /var/www/html/storage/logs\n\
+chown -R www-data:www-data /var/www/html/storage\n\
+chmod -R 775 /var/www/html/storage\n\
+\n\
 # Laravel optimizations\n\
 cd /var/www/html\n\
+php artisan config:clear || true\n\
+php artisan cache:clear || true\n\
 php artisan config:cache || true\n\
 php artisan route:cache || true\n\
 php artisan view:cache || true\n\
