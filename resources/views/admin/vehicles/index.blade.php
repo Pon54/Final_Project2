@@ -9,7 +9,6 @@
     <a href="{{ route('admin.vehicles.create') }}" class="btn btn-success btn-xs pull-right">Add Vehicle</a>
   </div>
   <div class="panel-body">
-    @if(session('msg')) <div class="alert alert-success">{{ session('msg') }}</div> @endif
     <form id="bulkForm" method="POST" action="{{ route('admin.vehicles.bulkDelete') }}">
       @csrf
       <div class="mb-2">

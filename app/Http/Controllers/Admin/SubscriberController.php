@@ -17,6 +17,6 @@ class SubscriberController extends Controller
     {
         $s = Subscriber::find($id);
         if ($s) $s->delete();
-        return redirect()->route('admin.subscribers.index')->with('status','Subscriber removed');
+        return redirect()->route('admin.subscribers.index');
     }
 }

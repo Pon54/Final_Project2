@@ -24,7 +24,7 @@ class BrandController extends Controller
             'BrandName'=>'required|string|max:255|unique:tblbrands,BrandName'
         ]);
         Brand::create($r->only('BrandName'));
-        return redirect()->route('admin.brands.index')->with('msg','Brand created.');
+        return redirect()->route('admin.brands.index');
     }
 
     public function edit($id)
@@ -40,12 +40,12 @@ class BrandController extends Controller
         ]);
         $b = Brand::findOrFail($id);
         $b->update($r->only('BrandName'));
-        return redirect()->route('admin.brands.index')->with('msg','Brand updated.');
+        return redirect()->route('admin.brands.index');
     }
 
     public function destroy($id)
     {
         Brand::findOrFail($id)->delete();
-        return redirect()->route('admin.brands.index')->with('msg','Brand deleted.');
+        return redirect()->route('admin.brands.index');
     }
 }

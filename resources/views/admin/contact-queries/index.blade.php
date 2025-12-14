@@ -2,6 +2,10 @@
 
 @section('title','Manage Contact Us Queries')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap.min.css">
+@endpush
+
 @section('content')
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -9,13 +13,6 @@
     <small class="text-muted">View and manage customer inquiries</small>
   </div>
   <div class="panel-body">
-    @if(session('msg')) 
-      <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ session('msg') }}
-      </div> 
-    @endif
-
     @if($queries->count() > 0)
     <div class="table-responsive">
       <table class="table table-striped table-bordered" id="queries-table">
@@ -85,10 +82,8 @@
       {{ $queries->links() }}
     </div>
     @else
-    <div class="alert alert-info text-center">
-      <i class="fa fa-inbox fa-3x"></i>
-      <h4>No Contact Queries</h4>
-      <p>No customer inquiries have been received yet.</p>
+    <div class="text-center" style="padding: 40px;">
+      <p class="text-muted">No contact queries found.</p>
     </div>
     @endif
   </div>
@@ -225,10 +220,15 @@ Car Rental Portal Team</textarea>
 </div>
 
 @push('scripts')
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap.min.js"></script>
 <script>
 let currentQueryData = {};
 
 $(document).ready(function() {
+    console.log('Contact queries page loaded');
+    console.log('jQuery version:', $.fn.jquery);
+    
     // Initialize DataTable
     $('#queries-table').DataTable({
         "responsive": true,
@@ -241,6 +241,7 @@ $(document).ready(function() {
 
     // View query modal
     $('.view-query').click(function() {
+        console.log('View button clicked');
         const data = {
             id: $(this).data('id'),
             name: $(this).data('name'),
@@ -250,6 +251,7 @@ $(document).ready(function() {
             date: $(this).data('date')
         };
         
+        console.log('Query data:', data);
         currentQueryData = data;
         
         // Populate modal
@@ -269,6 +271,7 @@ $(document).ready(function() {
 
     // Reply button in main table
     $('.reply-query').click(function() {
+        console.log('Reply button clicked');
         openReplyModal($(this).data('email'), $(this).data('name'));
     });
 

@@ -33,7 +33,7 @@ class AdminController extends Controller
         }
         // gather comprehensive stats for dashboard
         $vehiclesCount = \App\Models\Vehicle::count();
-        $bookingsCount = \App\Models\Booking::count();
+        $bookingsCount = \App\Models\Booking::whereIn('Status', [0, 1])->count(); // Only active bookings
         $usersCount = \App\Models\UserLegacy::count();
         $brandsCount = \App\Models\Brand::count();
         $subscribersCount = \App\Models\Subscriber::count();

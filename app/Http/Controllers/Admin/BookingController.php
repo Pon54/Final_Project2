@@ -11,15 +11,26 @@ class BookingController extends Controller
     public function index(Request $r)
     {
         $query = Booking::with(['vehicle','user'])->orderBy('id','desc');
-        if ($r->has('status')) {
-            $statusInput = $r->status;
-            $map = ['new' => 0, 'confirmed' => 1, 'canceled' => 2];
-            if (isset($map[$statusInput])) {
-                $query->where('Status', $map[$statusInput]);
-            } elseif (is_numeric($statusInput)) {
-                $query->where('Status', (int)$statusInput);
+        
+        // Always exclude deleted bookings (Status = 2 means cancelled/deleted by user)
+        // Unless specifically filtering for canceled status
+        if ($r->has('status') && $r->status === 'canceled') {
+            $query->where('Status', 2);
+        } else {
+            if ($r->has('status')) {
+                $statusInput = $r->status;
+                $map = ['new' => 0, 'confirmed' => 1];
+                if (isset($map[$statusInput])) {
+                    $query->where('Status', $map[$statusInput]);
+                } elseif (is_numeric($statusInput)) {
+                    $query->where('Status', (int)$statusInput);
+                }
+            } else {
+                // By default, don't show cancelled bookings
+                $query->whereIn('Status', [0, 1]);
             }
         }
+        
         $bookings = $query->paginate(20);
         return view('admin.bookings.index', compact('bookings'));
     }
@@ -53,5 +64,17 @@ class BookingController extends Controller
             return redirect()->route('admin.bookings.index');
         }
         return view('admin.bookings.show', compact('b'));
+    }
+
+    public function destroy($id)
+    {
+        $booking = Booking::find($id);
+        if ($booking) {
+            $booking->delete();
+            session()->flash('msg', 'Booking deleted successfully.');
+        } else {
+            session()->flash('error', 'Booking not found.');
+        }
+        return redirect()->route('admin.bookings.index');
     }
 }

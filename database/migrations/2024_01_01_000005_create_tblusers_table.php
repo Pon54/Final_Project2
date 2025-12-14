@@ -14,6 +14,10 @@ return new class extends Migration {
                 $table->string('EmailId')->unique();
                 $table->string('ContactNo')->nullable();
                 $table->string('Password');
+                $table->date('dob')->nullable();
+                $table->text('Address')->nullable();
+                $table->string('City')->nullable();
+                $table->string('Country')->nullable();
                 $table->timestamps();
             });
         }

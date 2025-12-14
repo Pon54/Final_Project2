@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
+        if (!Schema::hasTable('admin')) {
+            Schema::create('admin', function (Blueprint $table) {
+                $table->id();
+                $table->string('UserName')->unique();
+                $table->string('Password');
+                $table->timestamps();
+            });
+        }
+
         if (!Schema::hasTable('tbltestimonial')) {
             Schema::create('tbltestimonial', function (Blueprint $table) {
                 $table->id();
@@ -39,6 +48,7 @@ return new class extends Migration {
 
     public function down()
     {
+        Schema::dropIfExists('admin');
         Schema::dropIfExists('tbltestimonial');
         Schema::dropIfExists('tblcontactusquery');
         Schema::dropIfExists('tblsubscribers');

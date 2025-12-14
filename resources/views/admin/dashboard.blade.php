@@ -56,7 +56,7 @@
 <div class="row">
     <div class="col-md-3">
         <div class="dashboard-card bg-cyan">
-            <h2>{{ $bookingsCount ?? 1 }}</h2>
+            <h2>{{ $bookingsCount ?? 0 }}</h2>
             <h4>TOTAL BOOKINGS</h4>
             <a href="{{ route('admin.bookings.index') }}" class="full-detail">FULL DETAIL →</a>
         </div>

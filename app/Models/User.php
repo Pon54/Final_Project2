@@ -31,7 +31,7 @@ class User extends Authenticatable
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -100,5 +100,21 @@ class User extends Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+
+    /**
+     * Get the bookings for the user.
+     */
+    public function bookings()
+    {
+        return $this->hasMany(\App\Models\Booking::class, 'userEmail', 'EmailId');
+    }
+
+    /**
+     * Get the testimonials for the user.
+     */
+    public function testimonials()
+    {
+        return $this->hasMany(\App\Models\Testimonial::class, 'UserEmail', 'EmailId');
     }
 }
