@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         $r->validate([
             'fullname' => 'required',
-            'emailid' => 'required|email',
+            'emailid' => 'required|email|unique:tblusers,EmailId',
             'password' => 'required|min:6'
         ]);
 

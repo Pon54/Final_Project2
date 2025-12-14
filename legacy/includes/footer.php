@@ -100,6 +100,20 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   </div>
 </div>
 
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border-radius: 15px; text-align: center;">
+      <div class="modal-body" style="padding: 40px;">
+        <div style="font-size: 80px; color: #f44336; margin-bottom: 20px;">😞</div>
+        <h3 style="color: #333; margin-bottom: 15px;">Oops!</h3>
+        <p style="font-size: 18px; color: #666;" id="errorMessage">An error occurred</p>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-top: 20px; padding: 10px 40px; font-size: 16px;">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php if(isset($_SESSION['success_modal'])): ?>
 <script>
   $(document).ready(function() {
@@ -110,3 +124,13 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
   unset($_SESSION['success_modal']); 
 endif; 
 ?>
+
+<?php if($errors->any()): ?>
+<script>
+  $(document).ready(function() {
+    var errorMsg = '<?php echo addslashes($errors->first()); ?>';
+    $('#errorMessage').text(errorMsg);
+    $('#errorModal').modal('show');
+  });
+</script>
+<?php endif; ?>
