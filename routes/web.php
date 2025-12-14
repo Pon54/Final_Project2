@@ -44,6 +44,11 @@ Route::get('/page', [PageController::class, 'show']);
 | Auth (public)
 |--------------------------------------------------------------------------
 */
+Route::get('/test-login', function() {
+    \Log::info('Test route hit');
+    return response()->json(['status' => 'ok', 'message' => 'Test route works']);
+});
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/forgot', [AuthController::class, 'forgot']);
