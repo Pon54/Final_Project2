@@ -123,28 +123,38 @@ $errorMsg = '';
 if ($hasError) {
     $errorMsg = function_exists('session') && session('error_modal') ? session('error_modal') : (isset($_SESSION['error_modal']) ? $_SESSION['error_modal'] : 'An error occurred');
 }
+
+// Clear sessions immediately after reading
+if(function_exists('session')) {
+    session()->forget('success_modal');
+    session()->forget('error_modal');
+}
+if(isset($_SESSION['success_modal'])) unset($_SESSION['success_modal']); 
+if(isset($_SESSION['error_modal'])) unset($_SESSION['error_modal']); 
 ?>
 
 <?php if($hasSuccess): ?>
   $(document).ready(function() {
     console.log('Showing success modal');
     $('#successModal').modal('show');
+    
+    // Auto-hide after 6 seconds
+    setTimeout(function() {
+      $('#successModal').modal('hide');
+    }, 6000);
   });
-<?php 
-  if(function_exists('session')) session()->forget('success_modal');
-  if(isset($_SESSION['success_modal'])) unset($_SESSION['success_modal']); 
-endif; 
-?>
+<?php endif; ?>
 
 <?php if($hasError): ?>
   $(document).ready(function() {
     console.log('Showing error modal');
     $('#errorMessage').text('<?php echo addslashes($errorMsg); ?>');
     $('#errorModal').modal('show');
+    
+    // Auto-hide after 6 seconds
+    setTimeout(function() {
+      $('#errorModal').modal('hide');
+    }, 6000);
   });
-<?php 
-  if(function_exists('session')) session()->forget('error_modal');
-  if(isset($_SESSION['error_modal'])) unset($_SESSION['error_modal']); 
-endif; 
-?>
+<?php endif; ?>
 </script>
