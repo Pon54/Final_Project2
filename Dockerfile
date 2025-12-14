@@ -31,7 +31,13 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
 # Set permissions for Laravel storage and cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+  && chmod -R 775 /var/www/html/storage \
+  && chmod -R 775 /var/www/html/bootstrap/cache \
+  && mkdir -p /var/www/html/storage/framework/sessions \
+  && mkdir -p /var/www/html/storage/framework/cache \
+  && mkdir -p /var/www/html/storage/framework/views \
+  && chmod -R 775 /var/www/html/storage/framework
 
 # Allow .htaccess overrides for Laravel routing
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
