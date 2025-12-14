@@ -80,9 +80,16 @@ chmod -R 775 /var/www/html/storage\n\
 cd /var/www/html\n\
 php artisan config:clear || true\n\
 php artisan cache:clear || true\n\
-php artisan config:cache || true\n\
-php artisan route:cache || true\n\
-php artisan view:cache || true\n\
+php artisan route:clear || true\n\
+php artisan view:clear || true\n\
+# Only cache if APP_KEY is set\n\
+if [ ! -z "$APP_KEY" ]; then\n\
+  php artisan config:cache || true\n\
+  php artisan route:cache || true\n\
+  php artisan view:cache || true\n\
+else\n\
+  echo "WARNING: APP_KEY not set, skipping config cache"\n\
+fi\n\
 \n\
 # Start Apache\n\
 apache2-foreground' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
