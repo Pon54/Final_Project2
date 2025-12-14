@@ -38,7 +38,7 @@ echo "<script type='text/javascript'> document.location = '$currentpage'; </scri
         <div class="row">
           <div class="login_wrap">
             <div class="col-md-12 col-sm-6">
-              <form method="post">
+              <form method="post" action="/login">
                 <div class="form-group">
                   <input type="email" class="form-control" name="email" placeholder="Email address*">
                 </div>

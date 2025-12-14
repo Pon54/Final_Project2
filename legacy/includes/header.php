@@ -30,14 +30,14 @@ $contactno=$result->ContactNo;
             <div class="social-follow">
             
             </div>
-   <?php   if(strlen($_SESSION['login'])==0)
+   <?php   if(!isset($_SESSION['login']) || strlen($_SESSION['login'])==0)
 	{	
 ?>
  <div class="login_btn"> <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
 <?php }
 else{ 
-
-echo "Welcome To Car rental portal";
+$userName = isset($_SESSION['fname']) ? $_SESSION['fname'] : 'User';
+echo "Welcome " . htmlentities($userName);
  } ?>
           </div>
         </div>

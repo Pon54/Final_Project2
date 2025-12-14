@@ -99,12 +99,24 @@ class AuthController extends Controller
             if ($ok) {
                 // Use Laravel's built-in authentication
                 Auth::login($user);
-                $r->session()->flash('success_modal', 'You have successfully logged in');
+                
+                // Set both Laravel and PHP session for legacy compatibility
+                $_SESSION['login'] = $user->EmailId;
+                $_SESSION['fname'] = $user->FullName;
+                session(['success_modal' => 'You have successfully logged in']);
+                $_SESSION['success_modal'] = 'You have successfully logged in';
+                
+                \Log::info('Login successful', ['user' => $user->EmailId]);
+                
                 return redirect('/');
             }
         }
-        $r->session()->flash('error', 'Invalid credentials');
-        return redirect()->back();
+        
+        // Set error in both sessions
+        session(['error_modal' => 'Invalid credentials']);
+        $_SESSION['error_modal'] = 'Invalid credentials';
+        
+        return redirect('/');
     }
 
     public function forgot(Request $r)
