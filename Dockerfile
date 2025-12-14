@@ -27,8 +27,14 @@ WORKDIR /var/www/html
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install Laravel dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Set composer environment variables for better stability
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_NO_INTERACTION=1
+ENV COMPOSER_MEMORY_LIMIT=-1
+
+# Install Laravel dependencies with retry logic
+RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist || \
+    (composer clear-cache && composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist)
 
 # Set permissions for Laravel storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
