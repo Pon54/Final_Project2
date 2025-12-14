@@ -93,27 +93,30 @@ class AuthController extends Controller
                 }
 
                 if ($ok) {
-                    // Use Laravel's built-in authentication (without remember token since column doesn't exist)
-                    Auth::login($user);
-                    
-                    // Regenerate session to prevent fixation
-                    $r->session()->regenerate();
-                    
-                    // Set session variables for legacy pages (Laravel manages the session)
-                    session(['login' => $user->EmailId]);
-                    session(['fname' => $user->FullName]);
-                    
-                    // Log for debugging
-                    \Log::info('User logged in successfully', [
-                        'user_id' => $user->id,
-                        'email' => $user->EmailId,
-                        'name' => $user->FullName,
-                        'auth_check' => Auth::check(),
-                        'auth_id' => Auth::id()
-                    ]);
-                    
-                    // Redirect with success message
-                    return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '! You have successfully logged in.');
+                    try {
+                        // Regenerate session to prevent fixation
+                        $r->session()->regenerate();
+                        
+                        // Set session variables manually (avoid Auth::login which requires remember_token)
+                        session([
+                            'login' => $user->EmailId,
+                            'fname' => $user->FullName,
+                            'user_id' => $user->id
+                        ]);
+                        
+                        // Log for debugging
+                        \Log::info('User logged in successfully', [
+                            'user_id' => $user->id,
+                            'email' => $user->EmailId,
+                            'name' => $user->FullName
+                        ]);
+                        
+                        // Redirect with success message
+                        return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '! You have successfully logged in.');
+                    } catch (\Exception $e) {
+                        \Log::error('Session error during login: ' . $e->getMessage());
+                        return redirect('/')->with('error', 'Login session error: ' . $e->getMessage());
+                    }
                 }
             }
             
@@ -138,10 +141,9 @@ class AuthController extends Controller
 
     public function logout(Request $r)
     {
-        Auth::logout();
-        $r->session()->invalidate();
-        $r->session()->regenerateToken();
-        $r->session()->flash('msg', 'Logged out successfully.');
-        return redirect('/');
+        // Clear session data
+        $r->session()->flush();
+        $r->session()->regenerate();
+        return redirect('/')->with('success', 'Logged out successfully.');
     }
 }

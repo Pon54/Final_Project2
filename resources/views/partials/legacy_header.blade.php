@@ -48,15 +48,15 @@ use Illuminate\Support\Facades\Auth;
               <!-- Social icons can be added here -->
             </div>
 
-            @guest
+            @if(!session('login'))
             <div class="login_btn"> 
               <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> 
             </div>
             @else
             <div class="login_btn">
-              <span class="welcome-text">Welcome To Car rental portal</span>
+              <span class="welcome-text">Welcome, {{ session('fname') }}!</span>
             </div>
-            @endguest
+            @endif
           </div>
         </div>
       </div>
@@ -80,15 +80,15 @@ use Illuminate\Support\Facades\Auth;
             <li class="dropdown"> 
               <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle" aria-hidden="true"></i> 
-                @auth
-                  {{ Auth::user()->FullName ?? Auth::user()->name ?? 'User' }}
+                @if(session('login'))
+                  {{ session('fname') ?? 'User' }}
                 @else
                   Guest
-                @endauth
+                @endif
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu">
-                @if(Auth::check())
+                @if(session('login'))
                   <li><a href="{{ url('/profile') }}">Profile Settings</a></li>
                   <li><a href="{{ url('/update-password') }}">Update Password</a></li>
                   <li><a href="{{ url('/my-booking') }}">My Booking</a></li>

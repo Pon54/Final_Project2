@@ -56,7 +56,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'Password',
-        'remember_token',
     ];
 
     /**
@@ -99,7 +98,7 @@ class User extends Authenticatable
      */
     public function getRememberTokenName()
     {
-        return 'remember_token';
+        return null;
     }
 
     /**
