@@ -121,33 +121,47 @@ $hasSuccess = false;
 $hasError = false;
 $errorMsg = '';
 
+// DEBUG: Log what's in the session
+error_log('=== MODAL DEBUG ===');
+error_log('Laravel session success_modal: ' . (function_exists('session') ? var_export(session('success_modal'), true) : 'N/A'));
+error_log('PHP session success_modal: ' . (isset($_SESSION['success_modal']) ? var_export($_SESSION['success_modal'], true) : 'N/A'));
+error_log('Laravel session error_modal: ' . (function_exists('session') ? var_export(session('error_modal'), true) : 'N/A'));
+error_log('PHP session error_modal: ' . (isset($_SESSION['error_modal']) ? var_export($_SESSION['error_modal'], true) : 'N/A'));
+
 // Check Laravel session first
 if(function_exists('session')) {
     $laravelSuccess = session('success_modal');
     $laravelError = session('error_modal');
     
-    if(!empty($laravelSuccess)) {
+    if(!empty($laravelSuccess) && $laravelSuccess !== false && $laravelSuccess !== null) {
         $hasSuccess = true;
         session()->forget('success_modal');
+        error_log('Found Laravel success modal, clearing it');
     }
-    if(!empty($laravelError)) {
+    if(!empty($laravelError) && $laravelError !== false && $laravelError !== null) {
         $hasError = true;
         $errorMsg = $laravelError;
         session()->forget('error_modal');
+        error_log('Found Laravel error modal, clearing it');
     }
 }
 
 // Check PHP session as fallback
-if(!$hasSuccess && isset($_SESSION['success_modal']) && !empty($_SESSION['success_modal'])) {
+if(!$hasSuccess && isset($_SESSION['success_modal']) && !empty($_SESSION['success_modal']) && $_SESSION['success_modal'] !== false) {
     $hasSuccess = true;
     unset($_SESSION['success_modal']);
+    error_log('Found PHP success modal, clearing it');
 }
 
-if(!$hasError && isset($_SESSION['error_modal']) && !empty($_SESSION['error_modal'])) {
+if(!$hasError && isset($_SESSION['error_modal']) && !empty($_SESSION['error_modal']) && $_SESSION['error_modal'] !== false) {
     $hasError = true;
     $errorMsg = $_SESSION['error_modal'];
     unset($_SESSION['error_modal']);
+    error_log('Found PHP error modal, clearing it');
 }
+
+error_log('Final result - hasSuccess: ' . var_export($hasSuccess, true) . ', hasError: ' . var_export($hasError, true));
+error_log('===================');
 ?>
 
 <?php if($hasSuccess): ?>
