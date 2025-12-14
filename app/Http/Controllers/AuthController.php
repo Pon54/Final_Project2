@@ -48,24 +48,30 @@ class AuthController extends Controller
 
     public function login(Request $r)
     {
+        // Enable detailed error reporting for debugging
+        \Log::info('========================================');
+        \Log::info('LOGIN ATTEMPT STARTED');
+        \Log::info('Time: ' . now());
+        \Log::info('IP: ' . $r->ip());
+        \Log::info('========================================');
+        
         try {
             // First check if APP_KEY is set
             if (empty(config('app.key'))) {
-                \Log::error('CRITICAL: APP_KEY is not set! Cannot encrypt cookies/sessions.');
-                \Log::error('Please set APP_KEY environment variable in Render dashboard.');
+                \Log::error('CRITICAL: APP_KEY is not set!');
                 return response()->json([
-                    'error' => 'Server Configuration Error',
-                    'message' => 'APP_KEY is not configured. Please contact administrator.',
-                    'fix' => 'Set APP_KEY in Render Environment Variables'
+                    'error' => 'APP_KEY not set',
+                    'message' => 'Server configuration error. Contact admin.'
                 ], 500);
             }
+            
+            \Log::info('APP_KEY check: PASSED');
 
-            // Log everything for debugging
-            \Log::info('=== LOGIN REQUEST STARTED ===');
+            // Log request details
             \Log::info('Request method: ' . $r->method());
-            \Log::info('Has email: ' . ($r->has('email') ? 'yes' : 'no'));
-            \Log::info('Has password: ' . ($r->has('password') ? 'yes' : 'no'));
-            \Log::info('APP_KEY is set: YES');
+            \Log::info('Request has email: ' . ($r->has('email') ? 'YES' : 'NO'));
+            \Log::info('Request has password: ' . ($r->has('password') ? 'YES' : 'NO'));
+            \Log::info('Email value: ' . ($r->email ?? 'EMPTY'));
             
             // Validate
             $r->validate([
@@ -129,20 +135,31 @@ class AuthController extends Controller
             return redirect('/')->with('success', 'Welcome back, ' . $user->FullName . '!');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Validation failed: ' . json_encode($e->errors()));
+            \Log::error('VALIDATION ERROR');
+            \Log::error('Errors: ' . json_encode($e->errors()));
             return redirect('/')->with('error', 'Please enter valid email and password.');
-        } catch (\Exception $e) {
-            \Log::error('=== LOGIN ERROR ===');
-            \Log::error('Error: ' . $e->getMessage());
-            \Log::error('File: ' . $e->getFile() . ':' . $e->getLine());
-            \Log::error('Trace: ' . $e->getTraceAsString());
+        } catch (\Throwable $e) {
+            \Log::error('========================================');
+            \Log::error('CRITICAL LOGIN ERROR');
+            \Log::error('Error Type: ' . get_class($e));
+            \Log::error('Error Message: ' . $e->getMessage());
+            \Log::error('Error File: ' . $e->getFile());
+            \Log::error('Error Line: ' . $e->getLine());
+            \Log::error('Stack Trace:');
+            \Log::error($e->getTraceAsString());
+            \Log::error('========================================');
             
-            // Check if it's encryption key error
-            if (strpos($e->getMessage(), 'encryption key') !== false || strpos($e->getMessage(), 'APP_KEY') !== false) {
-                return redirect('/')->with('error', 'Server configuration error: APP_KEY not set. Please contact administrator.');
+            // Return detailed error for debugging
+            if (config('app.debug')) {
+                return response()->json([
+                    'error' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ], 500);
             }
             
-            return redirect('/')->with('error', 'Login error. Please try again or contact support.');
+            return redirect('/')->with('error', 'Login error occurred. Error has been logged.');
         }
     }
 
