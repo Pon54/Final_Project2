@@ -29,25 +29,16 @@ class AuthController extends Controller
                 'Password' => bcrypt($r->password),
             ]);
 
-            // Set both Laravel session and PHP session for compatibility
-            session(['success_modal' => 'You have successfully registered']);
-            $_SESSION['success_modal'] = 'You have successfully registered';
-            
-            \Log::info('Registration successful, session set', ['session' => session('success_modal')]);
-            
-            return redirect('/');
+            // Use URL parameter instead of session for one-time modal
+            return redirect('/?modal=success_register');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Set error in both sessions
             $errors = $e->validator->errors();
             $errorMsg = $errors->first();
             
-            session(['error_modal' => $errorMsg]);
-            $_SESSION['error_modal'] = $errorMsg;
-            
-            \Log::info('Registration failed', ['error' => $errorMsg]);
-            
-            return redirect('/');
+            // Use URL parameter instead of session
+            return redirect('/?modal=error&msg=' . urlencode($errorMsg));
         }
     }
 
@@ -100,23 +91,17 @@ class AuthController extends Controller
                 // Use Laravel's built-in authentication
                 Auth::login($user);
                 
-                // Set both Laravel and PHP session for legacy compatibility
+                // Set PHP session for legacy pages
                 $_SESSION['login'] = $user->EmailId;
                 $_SESSION['fname'] = $user->FullName;
-                session(['success_modal' => 'You have successfully logged in']);
-                $_SESSION['success_modal'] = 'You have successfully logged in';
                 
-                \Log::info('Login successful', ['user' => $user->EmailId]);
-                
-                return redirect('/');
+                // Use URL parameter for modal
+                return redirect('/?modal=success_login');
             }
         }
         
-        // Set error in both sessions
-        session(['error_modal' => 'Invalid credentials']);
-        $_SESSION['error_modal'] = 'Invalid credentials';
-        
-        return redirect('/');
+        // Use URL parameter for error
+        return redirect('/?modal=error&msg=' . urlencode('Invalid credentials'));
     }
 
     public function forgot(Request $r)
