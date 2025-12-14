@@ -49,7 +49,7 @@
       $img = $result->Vimage1 ?? '';
       $paths = [
         "legacy/admin-img/vehicleimages/{$img}",
-        "legacy/admin/img/vehicleimages/{$img}",
+        "uploads/vehicles/{$img}",
         "legacy/img/vehicleimages/{$img}",
         "legacy/admin-img/{$img}",
         "legacy/admin/{$img}",

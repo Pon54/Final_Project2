@@ -45,6 +45,7 @@
               @php
                 $img = $result->Vimage1 ?? '';
                 $paths = [
+                  "uploads/vehicles/{$img}",
                   "legacy/admin-img/vehicleimages/{$img}",
                   "legacy/admin/img/vehicleimages/{$img}", 
                   "legacy/img/vehicleimages/{$img}",
@@ -127,8 +128,8 @@
                   @php
                     $img = $recentCar->Vimage1 ?? '';
                     $paths = [
+                      "uploads/vehicles/{$img}",
                       "legacy/admin-img/vehicleimages/{$img}",
-                      "legacy/admin/img/vehicleimages/{$img}",
                       "legacy/img/vehicleimages/{$img}",
                       "legacy/assets/images/featured-img-3.jpg"
                     ];

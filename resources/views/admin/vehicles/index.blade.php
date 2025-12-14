@@ -28,7 +28,7 @@
             <td>{{ $v->VehiclesTitle }}</td>
             <td>{{ $v->brand->BrandName ?? '—' }}</td>
             <td>{{ $v->PricePerDay }}</td>
-            <td><img src="{{ asset('legacy/admin/img/vehicleimages/'.$v->Vimage1) }}" style="height:50px"></td>
+            <td><img src="{{ asset('uploads/vehicles/'.$v->Vimage1) }}" style="height:50px"></td>
             <td>
               <a href="{{ route('admin.vehicles.edit',$v->id) }}" class="btn btn-primary btn-xs">Edit</a>
               <button type="button" class="btn btn-danger btn-xs delete-vehicle" data-id="{{ $v->id }}" data-url="{{ route('admin.vehicles.destroy',$v->id) }}">Delete</button>

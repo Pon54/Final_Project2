@@ -98,14 +98,9 @@ class AuthController extends Controller
                 // Regenerate session to prevent fixation
                 request()->session()->regenerate();
                 
-                // Ensure session is started for legacy pages
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-                
-                // Set PHP session for legacy pages
-                $_SESSION['login'] = $user->EmailId;
-                $_SESSION['fname'] = $user->FullName;
+                // Set session variables for legacy pages (Laravel manages the session)
+                session(['login' => $user->EmailId]);
+                session(['fname' => $user->FullName]);
                 
                 // Log for debugging
                 \Log::info('User logged in successfully', [

@@ -570,6 +570,7 @@
         @foreach($images as $index => $img)
           @php
             $paths = [
+              "uploads/vehicles/{$img}",
               "legacy/admin/img/vehicleimages/{$img}",
               "legacy/admin-img/vehicleimages/{$img}",
               "legacy/img/vehicleimages/{$img}",
@@ -875,7 +876,7 @@
                 @php
                   $img = $s->Vimage1 ?? '';
                   $paths = [
-                    "legacy/admin/img/vehicleimages/{$img}",
+                    "uploads/vehicles/{$img}",
                     "legacy/admin-img/vehicleimages/{$img}",
                     "legacy/img/vehicleimages/{$img}",
                     "legacy/admin-img/{$img}",
