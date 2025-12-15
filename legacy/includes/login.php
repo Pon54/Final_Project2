@@ -14,7 +14,7 @@ $results=$query->fetchAll(PDO::FETCH_OBJ);
 if($query->rowCount() > 0)
 {
 $_SESSION['login']=$_POST['email'];
-$_SESSION['fname']=$results->FullName;
+$_SESSION['fname']=$results[0]->FullName;
 $currentpage=$_SERVER['REQUEST_URI'];
 echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
 } else{
