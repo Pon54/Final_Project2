@@ -30,8 +30,18 @@ class AuthController extends Controller
                 'Password' => bcrypt($r->password),
             ]);
 
+            // Auto-login the user after registration
+            Auth::login($user);
+            
+            // Set session for legacy compatibility
+            $r->session()->put([
+                'login' => $user->EmailId,
+                'fname' => $user->FullName,
+                'user_id' => $user->id
+            ]);
+
             // Redirect to homepage with success message
-            return redirect('/')->with('success', 'You have successfully registered! You can now log in.');
+            return redirect('/')->with('success', 'Registration successful! Welcome, ' . $user->FullName . '!');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Get validation errors
@@ -113,7 +123,10 @@ class AuthController extends Controller
                 return redirect('/')->with('error', 'Invalid password.');
             }
             
-            // Set session
+            // Log in via Laravel Auth
+            Auth::login($user);
+            
+            // Set session for legacy compatibility
             \Log::info('Setting session data...');
             $r->session()->put([
                 'login' => $user->EmailId,
@@ -124,7 +137,8 @@ class AuthController extends Controller
             // Save immediately
             $r->session()->save();
             
-            \Log::info('Session saved. Values: ' . json_encode([
+            \Log::info('Session saved. Auth check: ' . (Auth::check() ? 'YES' : 'NO'));
+            \Log::info('Session values: ' . json_encode([
                 'login' => $r->session()->get('login'),
                 'fname' => $r->session()->get('fname'),
                 'user_id' => $r->session()->get('user_id')

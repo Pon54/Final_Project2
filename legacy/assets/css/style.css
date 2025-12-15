@@ -1260,23 +1260,27 @@ nav.navbar {
 }
 .car-title-m {
   overflow: hidden;
-  padding: 20px;
+  padding: 15px 20px;
+  text-align: center;
 }
 .car-title-m h6 {
   float: none;
-  margin: 0 auto;
-  max-width: 245px;
+  margin: 0 auto 10px;
+  max-width: 100%;
   text-align: center;
+  font-size: 18px;
 }
 .car-title-m h6 a {
   color: #111111;
+  font-weight: 600;
 }
 .car-title-m .price {
-  color: #555555;
+  color: #fa2837;
   display: block;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
+  margin-top: 5px;
 }
 
 .inventory_info_m {

@@ -6,6 +6,7 @@ $(function(e) {
 	Testimonial Slider
 	-------------------------------------------------------------------*/
 	var owl = $("#testimonial-slider");
+	if (owl.length && typeof owl.owlCarousel === 'function') {
 	owl.owlCarousel({
 	  itemsCustom : [
 		[0, 1],
@@ -19,12 +20,13 @@ $(function(e) {
 	  navigation : false,
 	  autoPlay  : 3000
 	});
-	
+	}
 	
 /*------------------------------------------------------------------
 	Testimonial Slider 2
 	-------------------------------------------------------------------*/
 	var owl = $("#testimonial-slider-2");
+	if (owl.length && typeof owl.owlCarousel === 'function') {
 	owl.owlCarousel({
 	  itemsCustom : [
 		[0, 1],
@@ -38,13 +40,14 @@ $(function(e) {
 	  navigation : false,
 	  autoPlay  : 3000
 	});
-	
+	}
 	
 	
 /*------------------------------------------------------------------
 	Trending Slider
 	-------------------------------------------------------------------*/
 	var owl = $("#trending_slider");
+	if (owl.length && typeof owl.owlCarousel === 'function') {
 	owl.owlCarousel({
 	  itemsCustom : [
 		[0, 1],
@@ -57,12 +60,13 @@ $(function(e) {
 	  navigation : false,
 	  autoPlay  : 3000
 	});
-
+	}
 
 /*------------------------------------------------------------------
 	Popular Brands
 	-------------------------------------------------------------------*/
 	var owl = $("#popular_brands");
+	if (owl.length && typeof owl.owlCarousel === 'function') {
 	owl.owlCarousel({
 	  itemsCustom : [
 		[0, 2],
@@ -77,12 +81,13 @@ $(function(e) {
 	  navigation : false,
 	  autoPlay  : 3000
 	});
-
+	}
 
 /*------------------------------------------------------------------
 	Listing Image Slider { Style 1}
 	-------------------------------------------------------------------*/
 	var owl = $("#listing_img_slider");
+	if (owl.length && typeof owl.owlCarousel === 'function') {
 	owl.owlCarousel({
 	  itemsCustom : [
 		[0, 1],
@@ -97,6 +102,7 @@ $(function(e) {
 	  pagination: false,
 	  autoPlay  : 3000
 	});
+	}
 
 
 
