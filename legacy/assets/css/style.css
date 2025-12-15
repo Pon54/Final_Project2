@@ -1263,16 +1263,18 @@ nav.navbar {
   padding: 20px;
 }
 .car-title-m h6 {
-  float: left;
+  float: none;
   margin: 0 auto;
   max-width: 245px;
+  text-align: center;
 }
 .car-title-m h6 a {
   color: #111111;
 }
 .car-title-m .price {
   color: #555555;
-  float: right;
+  display: block;
+  text-align: center;
   font-size: 16px;
   font-weight: 800;
 }
