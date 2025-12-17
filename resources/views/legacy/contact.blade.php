@@ -5,8 +5,8 @@
 @section('content')
 <section class="contact_us section-padding">
   <div class="container">
-    <div  class="row">
-      <div class="col-md-6">
+    <div class="row" style="gap: 40px;">
+      <div class="col-md-6" style="padding-right: 30px;">
         <h3>Get in touch using the form below</h3>
         @if(session('error'))<div class="errorWrap"><strong>ERROR</strong>:{{ session('error') }}</div>@endif
         @if(session('msg'))<div class="succWrap"><strong>SUCCESS</strong>:{{ session('msg') }}</div>@endif
@@ -35,40 +35,23 @@
           </form>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" style="padding-left: 30px;">
         <h3>Contact Info</h3>
-        <style>
-          .contact_detail ul li {
-            transition: all 0.3s ease;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-          }
-          .contact_detail ul li:hover {
-            background: #f8f9fa;
-            transform: translateX(5px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-          }
-          .contact_info_m {
-            color: #5a6c7d;
-            cursor: default;
-          }
-        </style>
-        <div class="contact_detail">
-          <ul>
-            <li>
-              <div class="icon_wrap"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-              <div class="contact_info_m">{{ $contact_info->address ?? 'Address not set' }}</div>
-            </li>
-            <li>
-              <div class="icon_wrap"><i class="fa fa-phone" aria-hidden="true"></i></div>
-              <div class="contact_info_m">{{ $contact_info->phone ?? 'Phone not set' }}</div>
-            </li>
-            <li>
-              <div class="icon_wrap"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
-              <div class="contact_info_m">{{ $contact_info->email ?? 'Email not set' }}</div>
-            </li>
-          </ul>
+        <div class="contact_form gray-bg">
+          <form>
+            <div class="form-group">
+              <label class="control-label">Address</label>
+              <input type="text" class="form-control white_bg" value="{{ $contact_info->address ?? 'Address not set' }}" readonly>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Phone</label>
+              <input type="text" class="form-control white_bg" value="{{ $contact_info->phone ?? 'Phone not set' }}" readonly>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Email</label>
+              <input type="text" class="form-control white_bg" value="{{ $contact_info->email ?? 'Email not set' }}" readonly>
+            </div>
+          </form>
         </div>
       </div>
     </div>

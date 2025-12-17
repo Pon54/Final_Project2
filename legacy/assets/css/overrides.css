@@ -1,0 +1,138 @@
+/* Custom overrides to reduce footer spacing */
+.footer-top {
+  padding: 40px 0 !important; /* Reduced from 80px to 40px */
+}
+
+.footer-top h6 {
+  margin-bottom: 20px !important; /* Reduced from 40px to 20px */
+}
+
+.footer-top ul li {
+  margin-bottom: 10px !important; /* Reduced from 16px to 10px */
+}
+
+.footer-bottom {
+  padding: 15px 0 !important; /* Reduced from 22px to 15px */
+}
+
+.subscribed-text {
+  padding-top: 8px !important; /* Slightly reduced from 10px to 8px */
+  margin-bottom: 0 !important;
+}
+
+.col-list-3 {
+  width: 32% !important; /* Slightly wider cards */
+  padding: 0 20px !important; /* Increased spacing between cards */
+  margin-bottom: 40px !important;
+}
+
+/* Container max-width adjustment for better use of space */
+.section-padding .container {
+  max-width: 1400px !important; /* Wider container */
+}
+
+
+/* Stronger modern background design for car listing section */
+.section-padding.gray-bg {
+  background:
+    repeating-linear-gradient(135deg, #f5f6f7 0 40px, #ececec 40px 80px),
+    linear-gradient(120deg, rgba(250,40,55,0.04) 0%, rgba(255,255,255,0.0) 100%);
+  position: relative;
+}
+
+/* Add a large, soft red circle in the background for accent */
+.section-padding.gray-bg::before {
+  content: '';
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(250,40,55,0.10) 0%, rgba(250,40,55,0.0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section-padding.gray-bg > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Red accent circle behind the New Car button */
+.recent-tab {
+  position: relative;
+  z-index: 2;
+}
+.recent-tab:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #fa2837 0%, #fa2837 60%, transparent 100%);
+  opacity: 0.10;
+  border-radius: 50%;
+  z-index: 1;
+}
+.recent-tab > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Consistent black, white, red design for car cards */
+.recent-car-list {
+  background: #ffffff !important;
+  border: 2px solid #222222 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.recent-car-list:hover {
+  border-color: #fa2837 !important;
+  box-shadow: 0 8px 25px rgba(250, 40, 55, 0.3) !important;
+  transform: translateY(-8px) !important;
+}
+
+/* Car title section with red accent */
+.car-title-m {
+  background: #222222 !important;
+  padding: 15px 20px !important;
+}
+
+.car-title-m h6 a {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.car-title-m .price {
+  color: #fa2837 !important;
+  font-weight: bold !important;
+  font-size: 18px !important;
+}
+
+/* Inventory info section */
+.inventory_info_m {
+  background: #ffffff !important;
+  padding: 15px 20px !important;
+  color: #666666 !important;
+}
+
+/* Car info overlay */
+.car-info-box ul {
+  background: rgba(34, 34, 34, 0.9) !important;
+}
+
+.car-info-box li {
+  color: #ffffff !important;
+}
+
+/* New Car badge styling */
+.recent-car-list .ribbon {
+  background: #fa2837 !important;
+  color: #ffffff !important;
+}

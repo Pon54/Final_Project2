@@ -23,7 +23,7 @@
         </div>
         <h3 style="color:#2c3e50;margin-bottom:15px;font-weight:600;font-size:24px;">Success!</h3>
         <p style="color:#7f8c8d;font-size:16px;margin-bottom:30px;line-height:1.5;">{{ session('success') }}</p>
-        <button onclick="document.getElementById('successAlert').style.display='none'" class="btn btn-success" style="padding:12px 50px;font-size:16px;background:#4CAF50;border:none;border-radius:6px;cursor:pointer;color:white;font-weight:600;">
+        <button onclick="closeSuccessAndShowLogin()" class="btn btn-success" style="padding:12px 50px;font-size:16px;background:#4CAF50;border:none;border-radius:6px;cursor:pointer;color:white;font-weight:600;">
           OK
         </button>
       </div>
@@ -40,6 +40,15 @@
         }
       }
     </style>
+    <script>
+      function closeSuccessAndShowLogin() {
+        document.getElementById('successAlert').style.display='none';
+        @if(session('show_login_modal'))
+          // Open the login modal after closing success popup
+          $('#loginform').modal('show');
+        @endif
+      }
+    </script>
     @endif
 
     {{-- Error notifications --}}

@@ -30,18 +30,12 @@ class AuthController extends Controller
                 'Password' => bcrypt($r->password),
             ]);
 
-            // Auto-login the user after registration
-            Auth::login($user);
-            
-            // Set session for legacy compatibility
-            $r->session()->put([
-                'login' => $user->EmailId,
-                'fname' => $user->FullName,
-                'user_id' => $user->id
+            // Do NOT auto-login - user must log in manually
+            // Redirect to homepage with success message and trigger login modal
+            return redirect('/')->with([
+                'success' => 'You have successfully registered! Please log in to continue.',
+                'show_login_modal' => true
             ]);
-
-            // Redirect to homepage with success message
-            return redirect('/')->with('success', 'Registration successful! Welcome, ' . $user->FullName . '!');
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Get validation errors
