@@ -412,16 +412,20 @@
 }
 
 /* Three Column FAQ Layout */
+/* FAQ columns: perfectly aligned and equal height */
 .faq-columns {
   margin-top: 40px;
   text-align: left;
   display: flex;
   align-items: stretch;
+  gap: 32px;
 }
 
 .faq-columns .col-md-4 {
   display: flex;
+  flex-direction: column;
   margin-bottom: 0;
+  height: 100%;
 }
 
 .faq-box {
@@ -433,6 +437,9 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  min-height: 480px;
+  justify-content: flex-start;
 }
 
 .faq-box:hover {

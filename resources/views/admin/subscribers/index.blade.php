@@ -11,11 +11,11 @@
   <tbody>
     @forelse($subscribers as $s)
     <tr>
-      <td>{{ $s->id }}</td>
+      <td>{{ $loop->iteration }}</td>
       <td>{{ $s->SubscriberEmail }}</td>
       <td>
         <form method="POST" action="{{ route('admin.subscribers.destroy', $s->id) }}">@csrf @method('DELETE')
-          <button class="btn btn-sm btn-danger" onclick="return confirm('Remove subscriber?')">Remove</button>
+          <button class="btn btn-danger btn-lg" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;" onclick="return confirm('Remove subscriber?')">Remove</button>
         </form>
       </td>
     </tr>

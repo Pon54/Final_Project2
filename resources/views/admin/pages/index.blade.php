@@ -18,11 +18,13 @@
       <td>{{ $p->PageName }}</td>
       <td>{{ $p->type }}</td>
       <td>
-        <a href="{{ route('admin.pages.edit', $p->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-        <form method="POST" action="{{ route('admin.pages.destroy', $p->id) }}" style="display:inline-block">
-          @csrf @method('DELETE')
-          <button class="btn btn-sm btn-danger" onclick="return confirm('Delete page?')">Delete</button>
-        </form>
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-start;">
+          <a href="{{ route('admin.pages.edit', $p->id) }}" class="btn btn-secondary btn-lg" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;">Edit</a>
+          <form method="POST" action="{{ route('admin.pages.destroy', $p->id) }}" style="display:inline-block">
+            @csrf @method('DELETE')
+            <button class="btn btn-danger btn-lg" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;" onclick="return confirm('Delete page?')">Delete</button>
+          </form>
+        </div>
       </td>
     </tr>
     @empty

@@ -4,12 +4,9 @@
 
 @section('content')
 <div class="panel panel-default">
-  <div style="width:100%;display:flex;justify-content:center;align-items:center;margin:30px 0 20px 0;">
-    <img src="/legacy/assets/images/logo.png" alt="Logo" style="width:110px;height:110px;border-radius:50%;border:5px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,0.08);background:#223344;object-fit:cover;display:block;">
-  </div>
-  <div class="panel-heading">
+  <div class="panel-heading" style="position:relative;min-height:48px;">
     Manage Vehicle Brands
-    <a href="{{ route('admin.brands.create') }}" class="btn btn-success btn-xs pull-right">
+    <a href="{{ route('admin.brands.create') }}" class="btn btn-secondary pull-right" style="background:#495057;border:none;font-size:1.1em;padding:8px 28px;min-width:170px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:8px;position:absolute;top:50%;right:20px;transform:translateY(-50%);">
       <i class="fa fa-plus"></i> Add New Brand
     </a>
   </div>
@@ -35,26 +32,22 @@
         <tbody>
           @foreach($brands as $brand)
           <tr>
-            <td>{{ $brand->id }}</td>
+            <td>{{ $loop->iteration }}</td>
             <td>
               <strong>{{ $brand->BrandName }}</strong>
             </td>
             <td>
-              <span class="badge badge-info">
+              <span class="badge" style="background:#495057;color:#fff;font-size:1.05em;padding:10px 22px;border-radius:12px;min-width:90px;display:inline-block;">
                 {{ \App\Models\Vehicle::where('VehiclesBrand', $brand->id)->count() }} vehicles
               </span>
             </td>
             <td>
-              <div class="btn-group btn-group-xs">
-                <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-primary" title="Edit Brand">
-                  <i class="fa fa-edit"></i> Edit
-                </a>
-                <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete('{{ $brand->BrandName }}')">
+              <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-start;">
+                <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-primary btn-lg" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;">Edit</a>
+                <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" style="display:inline;">
                   @csrf 
                   @method('DELETE')
-                  <button type="submit" class="btn btn-danger" title="Delete Brand">
-                    <i class="fa fa-trash"></i> Delete
-                  </button>
+                  <button type="submit" class="btn btn-danger btn-lg" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;">Delete</button>
                 </form>
               </div>
             </td>

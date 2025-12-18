@@ -24,8 +24,8 @@
           <option value="canceled" @if($b->Status==2) selected @endif>Canceled</option>
         </select>
       </div>
-      <button class="btn btn-primary">Update</button>
-      <a class="btn btn-default" href="{{ route('admin.bookings.index') }}">Back</a>
+      <button class="btn btn-primary btn-lg" style="min-width: 110px; font-size: 1.1em; padding: 10px 28px;">Update</button>
+      <a class="btn btn-default btn-lg" style="min-width: 110px; font-size: 1.1em; padding: 10px 28px;" href="{{ route('admin.bookings.index') }}">Back</a>
     </form>
   </div>
 </div>

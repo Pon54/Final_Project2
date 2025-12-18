@@ -4,17 +4,17 @@
 
 @section('content')
 <div class="panel panel-default">
-  <div class="panel-heading">
+  <div class="panel-heading" style="position:relative;min-height:48px;">
     Manage Vehicles
-    <a href="{{ route('admin.vehicles.create') }}" class="btn btn-success btn-xs pull-right">Add Vehicle</a>
+    <a href="{{ route('admin.vehicles.create') }}" class="btn btn-secondary pull-right" style="background:#495057;border:none;font-size:1.1em;padding:8px 28px;min-width:150px;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.04);border-radius:16px;position:absolute;top:50%;right:20px;transform:translateY(-50%);">Add Vehicle</a>
   </div>
   <div class="panel-body">
     <form id="bulkForm" method="POST" action="{{ route('admin.vehicles.bulkDelete') }}">
       @csrf
-      <div class="mb-2">
-        <button type="button" id="selectAll" class="btn btn-sm btn-default">Select All</button>
-        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete selected?')">Delete Selected</button>
-        <a href="{{ route('admin.vehicles.export') }}" class="btn btn-primary btn-sm">Export CSV</a>
+      <div class="mb-2" style="display: flex; gap: 16px; align-items: flex-start; margin-top: -8px;">
+        <button type="button" id="selectAll" class="btn btn-dark btn-lg" style="min-width: 120px; font-size: 1.1em; padding: 10px 24px;">Select All</button>
+        <button type="submit" class="btn btn-danger btn-lg" style="min-width: 160px; font-size: 1.1em; padding: 10px 24px;" onclick="return confirm('Delete selected?')">Delete Selected</button>
+        <a href="{{ route('admin.vehicles.export') }}" class="btn btn-primary btn-lg" style="min-width: 140px; font-size: 1.1em; padding: 10px 24px;">Export CSV</a>
       </div>
       <table class="table table-striped table-bordered" id="vehicles-table">
         <thead>
@@ -35,10 +35,12 @@
                 <span style="color: #bbb;">N/A</span>
               @endif
             </td>
-            <td><img src="{{ asset('uploads/vehicles/'.$v->Vimage1) }}" style="height:50px"></td>
+            <td style="text-align:center;vertical-align:middle;"><img src="{{ asset('uploads/vehicles/'.$v->Vimage1) }}" style="height:50px;display:inline-block;"></td>
             <td>
-              <a href="{{ route('admin.vehicles.edit',$v->id) }}" class="btn btn-primary btn-xs">Edit</a>
-              <button type="button" class="btn btn-danger btn-xs delete-vehicle" data-id="{{ $v->id }}" data-url="{{ route('admin.vehicles.destroy',$v->id) }}">Delete</button>
+              <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-start;">
+                <a href="{{ route('admin.vehicles.edit',$v->id) }}" class="btn btn-primary btn-lg" style="min-width: 70px; font-size: 1.1em; padding: 8px 20px;">Edit</a>
+                <button type="button" class="btn btn-danger btn-lg delete-vehicle" style="min-width: 90px; font-size: 1.1em; padding: 8px 20px;" data-id="{{ $v->id }}" data-url="{{ route('admin.vehicles.destroy',$v->id) }}">Delete</button>
+              </div>
             </td>
           </tr>
           @endforeach
