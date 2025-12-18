@@ -25,6 +25,10 @@ class PageController extends Controller
             'type' => 'nullable|string|max:50',
             'detail' => 'nullable|string',
         ]);
+        // Normalize type: lowercase, no spaces
+        if (!empty($data['type'])) {
+            $data['type'] = strtolower(str_replace(' ', '', $data['type']));
+        }
         Page::create($data);
         return redirect()->route('admin.pages.index')->with('status', 'Page created');
     }
@@ -43,6 +47,10 @@ class PageController extends Controller
             'type' => 'nullable|string|max:50',
             'detail' => 'nullable|string',
         ]);
+        // Normalize type: lowercase, no spaces
+        if (!empty($data['type'])) {
+            $data['type'] = strtolower(str_replace(' ', '', $data['type']));
+        }
         $page->update($data);
         return redirect()->route('admin.pages.index')->with('status', 'Page updated');
     }

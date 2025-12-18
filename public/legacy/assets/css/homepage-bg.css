@@ -1,21 +1,22 @@
 body.homepage-bg {
-  background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #f7fafc 0%, #e3e6ed 100%);
   min-height: 100vh;
+  position: relative;
 }
 
-@media (min-width: 768px) {
-  body.homepage-bg {
-    background: url('/legacy/assets/images/bg-cars-blur.jpg') center top no-repeat, linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
-    background-size: cover, 100% 100%;
-  }
-}
-
-/* Optional: add a subtle overlay for readability */
 body.homepage-bg::before {
   content: '';
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(255,255,255,0.7);
+  background:
+    radial-gradient(circle at 20% 30%, #e0e7ef 0%, #f7fafc 60%, transparent 100%),
+    radial-gradient(circle at 80% 70%, #e0e7ef 0%, #f7fafc 60%, transparent 100%),
+    url('/legacy/assets/images/bg-cars-blur.jpg') center top no-repeat;
+  background-size:
+    600px 400px,
+    700px 500px,
+    cover;
+  opacity: 0.22;
   z-index: 0;
   pointer-events: none;
 }
@@ -23,4 +24,13 @@ body.homepage-bg::before {
 main, .container, .section-header, .panel, .panel-body {
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 900px) {
+  body.homepage-bg::before {
+    background-size:
+      320px 180px,
+      350px 220px,
+      cover;
+  }
 }

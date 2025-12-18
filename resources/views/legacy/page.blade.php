@@ -504,6 +504,7 @@
 }
 
 /* Single Centered About Us Box */
+/* Bigger About Us text */
 .about-single-box {
   background: #f8f9fa;
   padding: 60px 80px;
@@ -513,6 +514,17 @@
   margin: 40px auto;
   max-width: 1200px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1.25em;
+}
+.about-single-box .about-section {
+  font-size: 1.18em;
+}
+.about-single-box .section-title {
+  font-size: 2em;
+}
+.about-single-box .about-content {
+  font-size: 1.15em;
+  line-height: 2.1;
 }
 
 .about-single-box:hover {
