@@ -5,6 +5,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Admin') - Car Rental</title>
+    <!-- Google Fonts: Lato (HTTPS) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900,100italic,300italic,400italic,700italic,900italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('legacy/admin/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('legacy/admin/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('legacy/admin/css/style.css') }}">
@@ -69,6 +71,9 @@
     @endif
 
     <script src="{{ asset('legacy/admin/js/jquery.min.js') }}"></script>
+    <!-- DataTables JS (after jQuery) -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap.min.js"></script>
     <script src="{{ asset('legacy/admin/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('legacy/admin/js/main.js') }}"></script>
     
