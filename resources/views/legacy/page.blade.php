@@ -567,12 +567,15 @@
 /* Single Centered Privacy/Terms Box */
 .privacy-box {
   background: #f8f9fa;
-  padding: 60px 80px;
-  border-radius: 10px;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #fa2837;
-  margin: 40px auto;
-  max-width: 1200px;
+  padding: 100px 120px;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.13);
+  border-top: 5px solid #fa2837;
+  margin: 60px auto 60px auto;
+  max-width: 1800px;
+  min-width: 500px;
+  min-height: 600px;
+  width: 95%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -582,10 +585,10 @@
 }
 
 .privacy-content {
-  text-align: center;
+  text-align: justify;
   color: #555;
-  font-size: 16px;
-  line-height: 2 !important;
+  font-size: 22px;
+  line-height: 2.2 !important;
 }
 
 /* Responsive adjustments */
