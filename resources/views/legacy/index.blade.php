@@ -2,6 +2,7 @@
 
 @section('title', 'Home')
 
+<!-- @section('body_class', 'homepage-bg') -->
 @section('content')
 <!-- Banners -->
 <section id="banner" class="banner-section">
@@ -67,18 +68,36 @@
   <li><i class="fa fa-user" aria-hidden="true"></i>{{ $result->SeatingCapacity ?? '' }} seats</li>
   </ul>
   </div>
-  <div class="car-title-m">
-  <h6><a href="{{ url('vehicle/' . ($result->id ?? 0)) }}"> {{ $result->VehiclesTitle ?? '' }}</a></h6>
-  <span class="price">${{ $result->PricePerDay ?? '' }} /Day</span> 
+  <div class="car-title-m" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; min-height: 90px; padding-bottom: 28px;">
+    <div style="width: 100%; text-align: center; margin-bottom: 4px;">
+      <a href="{{ url('vehicle/' . ($result->id ?? 0)) }}" style="color: #222; text-decoration: none; font-size: 1.25em; font-weight: 700; letter-spacing: 0.5px; font-family: 'Segoe UI', Arial, sans-serif;">{{ $result->VehiclesTitle ?? '' }}</a>
+    </div>
+    <span class="price" style="display: block; text-align: center; color: #ff2d2d; font-size: 1.35em; font-weight: 600; margin-bottom: 2px; font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: 0.2px;">${{ $result->PricePerDay ?? '' }} <span style="font-size: 0.7em; font-weight: 400; color: #444;">/Day</span></span>
+    <!-- Rating moved to bottom right -->
+    <div class="car-rating" style="position: absolute; right: 10px; bottom: 4px; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.92); padding: 2px 8px 2px 4px; border-radius: 12px 0 0 0; box-shadow: 0 1px 4px rgba(0,0,0,0.04);">
+      <div style="display: flex; gap: 1px;">
+        @php $rating = round($result->rating ?? 0, 1); @endphp
+        @for ($i = 1; $i <= 5; $i++)
+          @if ($i <= floor($rating))
+            <span style="color: gold; font-size: 1.1em;">&#9733;</span>
+          @elseif ($i - $rating < 1 && $i > $rating)
+            <span style="color: gold; font-size: 1.1em;">&#9734;</span>
+          @else
+            <span style="color: #ccc; font-size: 1.1em;">&#9733;</span>
+          @endif
+        @endfor
+      </div>
+      <span style="color: #444; font-size: 0.97em; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 500;">({{ $rating }})</span>
+    </div>
   </div>
-  <div class="inventory_info_m">
-  <p>{{ Str::limit($result->VehiclesOverview ?? '', 70) }}</p>
-  </div>
+    <div class="inventory_info_m car-desc-hover">
+      <p style="margin:0;">{{ Str::limit($result->VehiclesOverview ?? '', 70) }}</p>
+    </div>
   </div>
   </div>
   @endforeach
 @else
-  <p>wala pa mahuman.</p>
+  <p>.</p>
 @endif
        
       </div>
@@ -87,25 +106,27 @@
 </section>
 <!-- /Resent Cat -->
 
+
 @endsection
 
 <style>
 /* Car Card Hover Effects */
+
 .col-list-3 .recent-car-list {
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   position: relative;
   background: #fff;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: none;
 }
 
 .col-list-3 .recent-car-list:hover {
   transform: translateY(-15px) scale(1.02);
   box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-  border: 2px solid #fa2837;
+  border: none;
   z-index: 10;
 }
 
@@ -114,6 +135,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
+  border: none;
+  box-shadow: none;
 }
 
 .col-list-3 .car-info-box img {

@@ -1,0 +1,35 @@
+/* Custom styles to enlarge About Us, FAQs, and Terms of Use content */
+
+/* About Us Section */
+.about-single-box, .about-box, .about-content, .about-section, .section-title {
+  font-size: 22px !important;
+  line-height: 2.2 !important;
+}
+.about-content p {
+  font-size: 20px !important;
+}
+
+/* FAQ Section */
+.faq-box, .faq-box h3, .faq-content, .faq-content p, .faq-content p strong {
+  font-size: 20px !important;
+  line-height: 2 !important;
+}
+.faq-box h3 {
+  font-size: 24px !important;
+}
+
+/* Terms/Privacy Section */
+.terms-box, .privacy-box, .privacy-content {
+  font-size: 20px !important;
+  line-height: 2.1 !important;
+}
+
+@media (max-width: 768px) {
+  .about-single-box, .privacy-box, .terms-box {
+    padding: 30px 10px !important;
+    font-size: 18px !important;
+  }
+  .about-content, .faq-content, .privacy-content {
+    font-size: 17px !important;
+  }
+}

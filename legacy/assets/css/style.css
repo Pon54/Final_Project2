@@ -764,9 +764,9 @@ table thead th, table thead td {
 ===========================*/
 
 .default-header {
-  background: #fff none repeat scroll 0 0;
+  background: #c0bebe none repeat scroll 0 0;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-  padding: 30px 0;
+  padding: 10px 0;
   transition-duration:0.3s;
    -moz-transition-duration:0.3s;
     -o-transition-duration:0.3s;
@@ -1260,27 +1260,23 @@ nav.navbar {
 }
 .car-title-m {
   overflow: hidden;
-  padding: 15px 20px;
-  text-align: center;
+  padding: 20px;
 }
 .car-title-m h6 {
   float: none;
-  margin: 0 auto 10px;
-  max-width: 100%;
+  margin: 0 auto;
+  max-width: 245px;
   text-align: center;
-  font-size: 18px;
 }
 .car-title-m h6 a {
   color: #111111;
-  font-weight: 600;
 }
 .car-title-m .price {
-  color: #fa2837;
+  color: #555555;
   display: block;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
-  margin-top: 5px;
 }
 
 .inventory_info_m {

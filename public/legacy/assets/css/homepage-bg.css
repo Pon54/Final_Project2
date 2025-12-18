@@ -1,0 +1,26 @@
+body.homepage-bg {
+  background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  body.homepage-bg {
+    background: url('/legacy/assets/images/bg-cars-blur.jpg') center top no-repeat, linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-size: cover, 100% 100%;
+  }
+}
+
+/* Optional: add a subtle overlay for readability */
+body.homepage-bg::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.7);
+  z-index: 0;
+  pointer-events: none;
+}
+
+main, .container, .section-header, .panel, .panel-body {
+  position: relative;
+  z-index: 1;
+}

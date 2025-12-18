@@ -10,7 +10,7 @@ class Vehicle extends Model
     public $timestamps = false;
     protected $fillable = [
         'VehiclesBrand','VehiclesTitle','Vimage1','Vimage2','Vimage3','Vimage4','Vimage5',
-        'FuelType','ModelYear','SeatingCapacity','VehiclesOverview','PricePerDay',
+        'FuelType','ModelYear','SeatingCapacity','VehiclesOverview','PricePerDay','rating',
         'AirConditioner','AntiLockBrakingSystem','PowerSteering','PowerWindows',
         'CDPlayer','LeatherSeats','CentralLocking','PowerDoorLocks',
         'BrakeAssist','DriverAirbag','PassengerAirbag','CrashSensor'

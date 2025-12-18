@@ -85,10 +85,10 @@
 /* Consistent black, white, red design for car cards */
 .recent-car-list {
   background: #ffffff !important;
-  border: 2px solid #222222 !important;
+  border: none !important;
   border-radius: 12px !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: none !important;
   transition: all 0.3s ease !important;
 }
 

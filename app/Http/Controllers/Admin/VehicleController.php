@@ -27,7 +27,7 @@ class VehicleController extends Controller
         try {
             $r->validate([
                 'VehiclesTitle'=>'required|string|max:255',
-                'PricePerDay'=>'required|numeric',
+                'PricePerDay'=>'required|numeric|min:0',
                 'Vimage1'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
                 'Vimage2'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
                 'Vimage3'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
@@ -42,9 +42,16 @@ class VehicleController extends Controller
                 '*.max' => 'Each image must not exceed 5MB in size.'
             ]);
 
+            // Prevent duplicate vehicle (same brand and title)
+            $existing = Vehicle::where('VehiclesTitle', $r->VehiclesTitle)
+                ->where('VehiclesBrand', $r->VehiclesBrand)
+                ->first();
+            if ($existing) {
+                return redirect()->back()->withInput()->with('error', 'A vehicle with the same title and brand already exists.');
+            }
+
             // use legacy column names so admin-created records appear correctly on the public site
-            $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
-            
+            $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand','rating']);
             // Handle accessories - checkboxes are only sent if checked
             $accessoryFields = ['AirConditioner','AntiLockBrakingSystem','PowerSteering','PowerWindows',
                                'CDPlayer','LeatherSeats','CentralLocking','PowerDoorLocks',
@@ -52,13 +59,11 @@ class VehicleController extends Controller
             foreach($accessoryFields as $field) {
                 $data[$field] = $r->has($field) ? 1 : 0;
             }
-            
             // Handle image uploads for all 5 images
             $uploadPath = public_path('uploads/vehicles');
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0755, true);
             }
-            
             for ($i = 1; $i <= 5; $i++) {
                 $imageField = "Vimage{$i}";
                 if ($r->hasFile($imageField)) {
@@ -68,10 +73,8 @@ class VehicleController extends Controller
                     $data[$imageField] = $name;
                 }
             }
-            
             Vehicle::create($data);
             return redirect()->route('admin.vehicles.index')->with('success', 'Vehicle posted successfully!');
-            
         } catch (\Exception $e) {
             \Log::error('Vehicle store error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error posting vehicle: ' . $e->getMessage())->withInput();
@@ -90,7 +93,7 @@ class VehicleController extends Controller
         try {
             $r->validate([
                 'VehiclesTitle'=>'required|string|max:255',
-                'PricePerDay'=>'required|numeric',
+                'PricePerDay'=>'required|numeric|min:0',
                 'Vimage1'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
                 'Vimage2'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
                 'Vimage3'=>'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:5120',
@@ -106,7 +109,7 @@ class VehicleController extends Controller
             ]);
             
             $vehicle = Vehicle::findOrFail($id);
-            $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand']);
+            $data = $r->only(['VehiclesTitle','VehiclesOverview','PricePerDay','FuelType','ModelYear','SeatingCapacity','VehiclesBrand','rating']);
             
             // Handle accessories - checkboxes are only sent if checked
             $accessoryFields = ['AirConditioner','AntiLockBrakingSystem','PowerSteering','PowerWindows',

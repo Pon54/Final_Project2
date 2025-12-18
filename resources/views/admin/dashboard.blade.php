@@ -42,10 +42,10 @@
     color: white;
     text-decoration: none;
 }
-.bg-blue { background: linear-gradient(135deg, #4a90e2, #357abd); }
-.bg-green { background: linear-gradient(135deg, #7ed321, #5cb85c); }
-.bg-cyan { background: linear-gradient(135deg, #50e3c2, #4dd0e1); }
-.bg-orange { background: linear-gradient(135deg, #f5a623, #ff9500); }
+.bg-blue { background: #444; }
+.bg-green { background: #bbb; color: #222; }
+.bg-cyan { background: #eee; color: #222; }
+.bg-orange { background: #222; color: #fff; }
 </style>
 
 <div class="page-title">

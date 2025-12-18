@@ -10,8 +10,11 @@
   <link rel="stylesheet" href="/legacy/assets/css/style.css">
   <link rel="stylesheet" href="/legacy/assets/css/font-awesome.min.css">
   <link rel="stylesheet" href="/legacy/assets/css/overrides.css">
+   <!-- <link rel="stylesheet" href="/legacy/assets/css/homepage-bg.css"> -->
+  <link rel="stylesheet" href="/legacy/assets/css/custom-bigger-pages.css">
   </head>
-  <body>
+  <body class="@yield('body_class')">
+   <body>
     @include('partials.legacy_header')
 
     {{-- Success notifications --}}
@@ -82,6 +85,7 @@
   <script src="/legacy/assets/js/jquery.min.js"></script>
   <script src="/legacy/assets/js/bootstrap.min.js"></script>
   <script src="/legacy/assets/js/interface.js"></script>
+  <!-- Custom script for bigger About/FAQ/Terms pages if needed -->
   <script>
     // Toggle password visibility
     function togglePasswordVisibility(inputId, iconId) {

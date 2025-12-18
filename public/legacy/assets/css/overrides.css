@@ -72,7 +72,7 @@
 /* Card visual: small top meta bar then white card with shadow */
 .col-list-3 { width: 30.333%; float:left; padding: 0 10px; box-sizing: border-box; }
 .recent-car-list { background: transparent; }
-.car-info-box { background:#f7f7f7; border-radius:4px 4px 0 0; padding:8px; font-size:13px; color:#fff; background:#666; }
+.car-info-box { background:transparent !important; border-radius:0 !important; padding:8px; font-size:13px; color:#fff; box-shadow:none !important; border:none !important; }
 .car-title-m { background:#fff; padding:12px 14px; box-shadow:0 6px 10px rgba(0,0,0,0.06); }
 .inventory_info_m { padding:10px 14px 18px; background:#fff; margin-bottom: 20px; }
 

@@ -64,56 +64,69 @@
             </div>
           </div>
 
+
           <div class="form-row">
             <div class="form-group col-md-4">
               <label>Model Year *</label>
               <input class="form-control" name="ModelYear" value="{{ old('ModelYear', $vehicle->ModelYear ?? '') }}">
             </div>
+            <div class="form-group col-md-4">
+              <label>Rating (1-5) *</label>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <input type="number" name="rating" min="1" max="5" step="0.1" class="form-control" style="width: 80px;" value="{{ old('rating', $vehicle->rating ?? '') }}" required>
+                <span style="color: #ffb400; font-size: 1.3em;">&#9733;</span>
+              </div>
+              <small class="text-muted">Set the initial rating for this vehicle (1 = lowest, 5 = highest)</small>
+            </div>
           </div>
 
-          <!-- Upload Images -->
-          <div class="form-group">
+          <!-- Upload Images (moved below Model Year) -->
+          <div class="form-group mt-4">
             <label>Upload Vehicle Images</label>
             <div class="row">
-              <div class="col-md-3">
-                <label>Image 1 * (Main)</label>
-                <input type="file" name="Vimage1" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                @if(isset($vehicle) && $vehicle->Vimage1)
-                  <small class="text-success">Current: {{ $vehicle->Vimage1 }}</small>
-                @endif
+              <div class="col-md-6">
+                <div class="mb-2">
+                  <label>Image 1 * (Main)</label>
+                  <input type="file" name="Vimage1" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                  @if(isset($vehicle) && $vehicle->Vimage1)
+                    <small class="text-success">Current: {{ $vehicle->Vimage1 }}</small>
+                  @endif
+                </div>
+                <div class="mb-2">
+                  <label>Image 2</label>
+                  <input type="file" name="Vimage2" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                  @if(isset($vehicle) && $vehicle->Vimage2)
+                    <small class="text-success">Current: {{ $vehicle->Vimage2 }}</small>
+                  @endif
+                </div>
+                <div class="mb-2">
+                  <label>Image 3</label>
+                  <input type="file" name="Vimage3" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                  @if(isset($vehicle) && $vehicle->Vimage3)
+                    <small class="text-success">Current: {{ $vehicle->Vimage3 }}</small>
+                  @endif
+                </div>
               </div>
-              <div class="col-md-3">
-                <label>Image 2</label>
-                <input type="file" name="Vimage2" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                @if(isset($vehicle) && $vehicle->Vimage2)
-                  <small class="text-success">Current: {{ $vehicle->Vimage2 }}</small>
-                @endif
-              </div>
-              <div class="col-md-3">
-                <label>Image 3</label>
-                <input type="file" name="Vimage3" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                @if(isset($vehicle) && $vehicle->Vimage3)
-                  <small class="text-success">Current: {{ $vehicle->Vimage3 }}</small>
-                @endif
-              </div>
-              <div class="col-md-3">
-                <label>Image 4</label>
-                <input type="file" name="Vimage4" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                @if(isset($vehicle) && $vehicle->Vimage4)
-                  <small class="text-success">Current: {{ $vehicle->Vimage4 }}</small>
-                @endif
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-3">
-                <label>Image 5</label>
-                <input type="file" name="Vimage5" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                @if(isset($vehicle) && $vehicle->Vimage5)
-                  <small class="text-success">Current: {{ $vehicle->Vimage5 }}</small>
-                @endif
+              <div class="col-md-6">
+                <div class="mb-2">
+                  <label>Image 4</label>
+                  <input type="file" name="Vimage4" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                  @if(isset($vehicle) && $vehicle->Vimage4)
+                    <small class="text-success">Current: {{ $vehicle->Vimage4 }}</small>
+                  @endif
+                </div>
+                <div class="mb-2">
+                  <label>Image 5</label>
+                  <input type="file" name="Vimage5" class="form-control-file" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                  @if(isset($vehicle) && $vehicle->Vimage5)
+                    <small class="text-success">Current: {{ $vehicle->Vimage5 }}</small>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
+
+
 
         </div>
 
@@ -152,7 +165,8 @@
             </div>
           </div>
 
-          <div class="mt-3 text-center">
+          <!-- Action Buttons (right aligned) -->
+          <div class="mt-3 text-right">
             <a href="{{ route('admin.vehicles.index') }}" class="btn btn-default">Cancel</a>
             <button class="btn btn-primary">Save changes</button>
           </div>
