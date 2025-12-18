@@ -4,6 +4,9 @@
 
 @section('content')
 <div class="panel panel-default">
+  <div style="width:100%;display:flex;justify-content:center;align-items:center;margin:30px 0 20px 0;">
+    <img src="/legacy/assets/images/logo.png" alt="Logo" style="width:110px;height:110px;border-radius:50%;border:5px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,0.08);background:#223344;object-fit:cover;display:block;">
+  </div>
   <div class="panel-heading">
     Manage Vehicle Brands
     <a href="{{ route('admin.brands.create') }}" class="btn btn-success btn-xs pull-right">

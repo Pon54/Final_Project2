@@ -18,7 +18,7 @@
       </div>
       <table class="table table-striped table-bordered" id="vehicles-table">
         <thead>
-          <tr><th><input type="checkbox" id="masterCheck"></th><th>#</th><th>Title</th><th>Brand</th><th>Price/Day</th><th>Image</th><th>Actions</th></tr>
+          <tr><th><input type="checkbox" id="masterCheck"></th><th>#</th><th>Title</th><th>Brand</th><th>Price/Day</th><th>Rating</th><th>Image</th><th>Actions</th></tr>
         </thead>
         <tbody>
           @foreach($vehicles as $v)
@@ -28,6 +28,13 @@
             <td>{{ $v->VehiclesTitle }}</td>
             <td>{{ $v->brand->BrandName ?? '—' }}</td>
             <td>{{ $v->PricePerDay }}</td>
+            <td>
+              @if(isset($v->rating))
+                <span style="color: #ffb400; font-size: 1.1em; font-weight: 600;">&#9733; {{ number_format($v->rating, 1) }}</span>
+              @else
+                <span style="color: #bbb;">N/A</span>
+              @endif
+            </td>
             <td><img src="{{ asset('uploads/vehicles/'.$v->Vimage1) }}" style="height:50px"></td>
             <td>
               <a href="{{ route('admin.vehicles.edit',$v->id) }}" class="btn btn-primary btn-xs">Edit</a>
