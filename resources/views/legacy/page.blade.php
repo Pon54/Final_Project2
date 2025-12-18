@@ -348,25 +348,14 @@
           </div>
         </div>
       @elseif($page->type === 'privacy' || $page->type === 'terms')
-        <!-- Separate Boxes for Each Paragraph -->
+        <!-- Single Centered Box for Privacy/Terms -->
         <div class="row">
           <div class="col-12">
-            @php
-              // Split content by double line breaks to get paragraphs
-              $content = trim($page->detail);
-              // Split by multiple newlines (paragraphs)
-              $paragraphs = preg_split('/\n\s*\n/', $content);
-              // Filter out empty paragraphs
-              $paragraphs = array_filter(array_map('trim', $paragraphs));
-            @endphp
-            
-            @foreach($paragraphs as $paragraph)
-              <div class="privacy-box mx-auto mb-4">
-                <div class="privacy-content">
-                  {!! nl2br(e($paragraph)) !!}
-                </div>
+            <div class="privacy-box mx-auto">
+              <div class="privacy-content">
+                {!! nl2br(e($page->detail)) !!}
               </div>
-            @endforeach
+            </div>
           </div>
         </div>
       @else

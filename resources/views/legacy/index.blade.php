@@ -68,8 +68,8 @@
   </ul>
   </div>
   <div class="car-title-m">
-  <h6><a href="{{ url('vehicle/' . ($result->id ?? 0)) }}">{{ $result->brand->BrandName ?? '' }}</a></h6>
-  <span class="price">₱{{ $result->PricePerDay ?? '' }} /Day</span> 
+  <h6><a href="{{ url('vehicle/' . ($result->id ?? 0)) }}"> {{ $result->VehiclesTitle ?? '' }}</a></h6>
+  <span class="price">${{ $result->PricePerDay ?? '' }} /Day</span> 
   </div>
   <div class="inventory_info_m">
   <p>{{ Str::limit($result->VehiclesOverview ?? '', 70) }}</p>

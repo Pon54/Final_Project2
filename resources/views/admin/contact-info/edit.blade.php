@@ -36,6 +36,19 @@
           
           <div class="form-section">
             <h5><i class="fa fa-info-circle"></i> Business Information</h5>
+            
+            <div class="form-group">
+              <label for="Address" class="control-label">
+                <i class="fa fa-map-marker"></i> Business Address *
+              </label>
+              <textarea name="Address" 
+                       id="Address" 
+                       class="form-control" 
+                       rows="3" 
+                       placeholder="Enter your complete business address..."
+                       required>{{ old('Address', $contactInfo->Address ?? '') }}</textarea>
+              <small class="help-block">This address will be displayed on your website's contact page.</small>
+            </div>
 
             <div class="form-group">
               <label for="EmailId" class="control-label">
